@@ -36,9 +36,9 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/auth/login", "/auth/register","http://localhost:8080/api/profiles").permitAll()
-                        .requestMatchers("/club-auth/**", "/admin-auth/**").permitAll()
-                        .requestMatchers("/users/**").permitAll()
+                        // Public endpoints: Auth, Profiles, and Users
+                        .requestMatchers("/auth/**", "/club-auth/**", "/admin-auth/**").permitAll()
+                        .requestMatchers("/profiles/**", "/users/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
@@ -48,6 +48,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
+        // Dynamically loads from your AppProperties/application.yml
         config.setAllowedOrigins(Arrays.asList(appProperties.getCorsOrigins().split(",")));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
@@ -61,5 +62,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 }

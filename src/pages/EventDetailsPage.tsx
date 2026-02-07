@@ -12,7 +12,6 @@ const EventDetailsPage = () => {
 
   useEffect(() => {
     const fetchEventDetails = async () => {
-      // 1. Validate ID
       const eventIdNumber = eventId ? parseInt(eventId, 10) : 0;
       
       if (isNaN(eventIdNumber) || eventIdNumber === 0) {
@@ -23,7 +22,6 @@ const EventDetailsPage = () => {
 
       try {
         setLoading(true);
-        // 2. Fetch data inside the async function
         const res = await apiFetch<EventDetails>(`/events/${eventIdNumber}`);
         
         if (res.error || !res.data) {
@@ -41,13 +39,13 @@ const EventDetailsPage = () => {
     fetchEventDetails();
   }, [eventId, toast]);
 
-  if (loading) return <div>Loading...</div>;
-  if (!event) return <div>Event not found.</div>;
+  if (loading) return <div className="flex justify-center p-10">Loading...</div>;
+  if (!event) return <div className="flex justify-center p-10">Event not found.</div>;
 
   return (
-    <div>
-      {/* Render your event details here */}
-      <h1>{event.name}</h1>
+    <div className="container mx-auto p-6">
+      <h1 className="text-3xl font-bold">{event.name}</h1>
+      <p className="mt-4 text-gray-600">{event.short_description}</p>
     </div>
   );
 };

@@ -56,23 +56,47 @@ public class ProfileController {
     public List<ProfileEntity> list() {
         return profileRepository.findAll();
     }
-
-    @PatchMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody Map<String, Object> body, Authentication auth) {
-        if (auth == null || !auth.getPrincipal().equals(id)) {
-            return ResponseEntity.status(403).build();
-        }
-        return profileRepository.findById(id).map(profile -> {
-            if (body.containsKey("full_name")) profile.setFullName((String) body.get("full_name"));
-            if (body.containsKey("username")) profile.setUsername((String) body.get("username"));
-            if (body.containsKey("roll_number")) profile.setRollNumber((String) body.get("roll_number"));
-            if (body.containsKey("year_of_study")) profile.setYearOfStudy(((Number) body.get("year_of_study")).intValue());
-            if (body.containsKey("branch")) profile.setBranch((String) body.get("branch"));
-            if (body.containsKey("blood_group")) profile.setBloodGroup((String) body.get("blood_group"));
-            profileRepository.save(profile);
-            return ResponseEntity.ok(profile);
-        }).orElse(ResponseEntity.notFound().build());
+// Fixed Update (PATCH) with Null Safety
+@PatchMapping("/{id}")
+public ResponseEntity<?> update(@PathVariable String id, @RequestBody Map<String, Object> body, Authentication auth) {
+    if (auth == null || !auth.getPrincipal().equals(id)) {
+        return ResponseEntity.status(403).build();
     }
+    return profileRepository.findById(id).map(profile -> {
+        if (body.get("full_name") != null) profile.setFullName((String) body.get("full_name"));
+        if (body.get("username") != null) profile.setUsername((String) body.get("username"));
+        if (body.get("roll_number") != null) profile.setRollNumber((String) body.get("roll_number"));
+        
+        // Safety check for numeric cast
+        Object year = body.get("year_of_study");
+        if (year instanceof Number) {
+            profile.setYearOfStudy(((Number) year).intValue());
+        }
+        
+        if (body.get("branch") != null) profile.setBranch((String) body.get("branch"));
+        if (body.get("blood_group") != null) profile.setBloodGroup((String) body.get("blood_group"));
+        
+        profileRepository.save(profile);
+        return ResponseEntity.ok(profile);
+    }).orElse(ResponseEntity.notFound().build());
+}
+
+// Fixed Optional Upsert (Handles Update vs Insert)
+@PutMapping("/{id}/optional")
+public ResponseEntity<?> upsertOptional(@PathVariable String id, @RequestBody ProfileOptionalEntity optional, Authentication auth) {
+    if (auth == null || !auth.getPrincipal().equals(id)) return ResponseEntity.status(403).build();
+    
+    ProfileEntity p = profileRepository.findById(id).orElse(null);
+    if (p == null) return ResponseEntity.notFound().build();
+    
+    // Logic Fix: Find existing record ID to trigger an UPDATE instead of INSERT
+    profileOptionalRepository.findByProfileId(p.getProfileId()).ifPresent(existing -> {
+        optional.setOptionalId(existing.getOptionalId());
+    });
+    
+    optional.setProfileId(p.getProfileId());
+    return ResponseEntity.ok(profileOptionalRepository.save(optional));
+}
 
     @GetMapping("/{id}/optional")
     public ResponseEntity<?> getOptional(@PathVariable String id) {
@@ -89,16 +113,6 @@ public class ProfileController {
     @GetMapping("/{id}/preferences")
     public List<UserPreferenceEntity> getPreferences(@PathVariable String id) {
         return userPreferenceRepository.findByUserId(id);
-    }
-
-    @PutMapping("/{id}/optional")
-    public ResponseEntity<?> upsertOptional(@PathVariable String id, @RequestBody ProfileOptionalEntity optional, Authentication auth) {
-        if (auth == null || !auth.getPrincipal().equals(id)) return ResponseEntity.status(403).build();
-        ProfileEntity p = profileRepository.findById(id).orElse(null);
-        if (p == null) return ResponseEntity.notFound().build();
-        Integer profileId = p.getProfileId();
-        if (profileId != null) optional.setProfileId(profileId);
-        return ResponseEntity.ok(profileOptionalRepository.save(optional));
     }
 
     @PostMapping("/{id}/preferences")

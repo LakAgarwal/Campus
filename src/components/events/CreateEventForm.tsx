@@ -108,12 +108,9 @@ const eventFormSchema = z.object({
   eligibility: z.string().min(1, "Eligibility criteria is required"),
   registration_deadline: z.string().min(1, "Registration deadline is required"),
   status: z.enum(["Open", "Closing Soon", "Waitlist", "Closed"]).default("Open"),
-  max_attendees: z.union([z.string(), z.number()]).transform((val) => {
-    const num = typeof val === 'string' ? parseInt(val, 10) : val;
-    return num;
-  }).pipe(z.number().min(1, "Maximum attendees must be at least 1")),
-  event_thumbnail: z.string().optional(),
-  tags: z.array(z.string()).optional(),
+  max_attendees: z.number().nullable().optional(), // Allow null for unlimited
+  event_thumbnail: z.string().url().or(z.literal("")).optional(), // Handle empty strings
+  tag: z.string().min(1, "Tag is required"), // Tag is often a string, not always a strict enum
 
   // Event Agenda
   agenda: z.array(z.object({

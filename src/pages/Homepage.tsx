@@ -20,6 +20,7 @@ const Homepage = () => {
     isLoading,
     filteredEvents,
     categories,
+    alerts,
     userPreferences,
     handleLogout,
     handleRegisterEvent,
