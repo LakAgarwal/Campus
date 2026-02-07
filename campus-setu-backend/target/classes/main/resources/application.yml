@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: campus-setu-backend
+  datasource:
+    url: jdbc:postgresql://localhost:5432/campus_setu
+    username: postgres
+    password: "#L123456y"
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    open-in-view: false
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+# JWT
+jwt:
+  secret: ${JWT_SECRET:campus-setu-secret-key-change-in-production-min-256-bits}
+  expiration-ms: 86400000
+
+# CORS - frontend origin
+app:
+  cors-origins: http://localhost:5173,http://localhost:3000
