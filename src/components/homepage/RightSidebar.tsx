@@ -1,29 +1,11 @@
 // Update the handleExploreSection function in RightSidebar.tsx to navigate to the people page
-<<<<<<< HEAD
-import React, { useEffect, useState, useRef } from "react";
-import { motion } from "framer-motion";
-import { AlertTriangle, Star, Users, BookOpen, FileText, Compass, Bookmark, ChevronRight, Sparkles } from "lucide-react";
-=======
 import React from "react";
 import { motion } from "framer-motion";
 import { AlertTriangle, Star, Users, BookOpen, FileText, Compass, Bookmark, ChevronRight } from "lucide-react";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-import { api } from "@/api/client";
-import { useAuth } from "@/hooks/use-auth";
-import { handleAIAlert } from "@/lib/ai-alerts";
-
-interface Alert {
-  id: number;
-  heading: string;
-  content: string;
-  time: string;
-  created_at: string;
-=======
 
 interface Alert {
   id: number;
@@ -31,7 +13,6 @@ interface Alert {
   message: string;
   type: string;
   countdown: string;
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 }
 
 interface RightSidebarProps {
@@ -39,13 +20,8 @@ interface RightSidebarProps {
   setIsRightSidebarVisible: (value: boolean) => void;
   isMobileView: boolean;
   isTabletView: boolean;
-<<<<<<< HEAD
-  handleNavigateToBookmarks: () => void;
-  handleExploreSection: (section: string) => void;
-=======
   alerts: Alert[];
   handleNavigateToBookmarks: () => void;
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 }
 
 const RightSidebar: React.FC<RightSidebarProps> = ({
@@ -53,26 +29,11 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
   setIsRightSidebarVisible,
   isMobileView,
   isTabletView,
-<<<<<<< HEAD
-  handleNavigateToBookmarks,
-  handleExploreSection,
-}) => {
-  const navigate = useNavigate();
-  const { toast } = useToast();
-  const { user } = useAuth();
-  const [alerts, setAlerts] = useState<Alert[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const alertsContainerRef = useRef<HTMLDivElement>(null);
-  const scrollIntervalRef = useRef<NodeJS.Timeout>();
-=======
   alerts,
   handleNavigateToBookmarks,
 }) => {
   const navigate = useNavigate();
   const { toast } = useToast();
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -95,86 +56,6 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
     },
   };
 
-<<<<<<< HEAD
-  const fetchAlerts = async () => {
-    if (!user) return;
-    try {
-      const data = await api.get<Alert[]>(`/alerts?userId=${user.id}`).catch(() => []);
-      setAlerts(Array.isArray(data) ? data : []);
-    } catch (error) {
-      console.error('Error fetching alerts:', error);
-      toast({
-        title: "Error",
-        description: "Failed to fetch alerts",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchAlerts();
-  }, [user, toast]);
-
-  const handleAIClick = async () => {
-    if (!user) return;
-    setIsGenerating(true);
-    try {
-      await api.delete(`/alerts?userId=${user.id}`).catch(() => null);
-      await handleAIAlert(user.id, new Date());
-      await new Promise(resolve => setTimeout(resolve, 500));
-      await fetchAlerts();
-      toast({
-        title: "Success",
-        description: "AI alerts generated successfully",
-      });
-    } catch (error) {
-      console.error('Error processing AI alerts:', error);
-      toast({
-        title: "Error",
-        description: "Failed to process AI alerts",
-        variant: "destructive",
-      });
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-
-  useEffect(() => {
-    if (!alertsContainerRef.current || alerts.length <= 1 || isHovered) return;
-
-    const container = alertsContainerRef.current;
-    const scrollHeight = container.scrollHeight;
-    const clientHeight = container.clientHeight;
-
-    if (scrollHeight <= clientHeight) return;
-
-    let currentScroll = 0;
-    const scrollStep = 1; // Adjust this value to control scroll speed
-
-    const scroll = () => {
-      if (isHovered) return;
-
-      currentScroll += scrollStep;
-      if (currentScroll >= scrollHeight - clientHeight) {
-        currentScroll = 0;
-      }
-      container.scrollTop = currentScroll;
-    };
-
-    scrollIntervalRef.current = setInterval(scroll, 50); // Adjust interval for smooth scrolling
-
-    return () => {
-      if (scrollIntervalRef.current) {
-        clearInterval(scrollIntervalRef.current);
-      }
-    };
-  }, [alerts, isHovered]);
-
-  
-
-=======
   const handleExploreSection = (section: string) => {
     if (section === "Like-Minded People") {
       navigate('/people'); // Enables navigation to the people page
@@ -189,7 +70,6 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
   };
   
   
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   return (
     <motion.aside
       className={`
@@ -232,62 +112,6 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
             Important Alerts
           </motion.h3>
 
-<<<<<<< HEAD
-          <motion.div variants={itemVariants} className="mb-4">
-            <Button
-              variant="outline"
-              size="sm"
-              className="w-full justify-start hover:bg-primary/10 transition-colors group bg-gradient-to-r from-purple-50 to-blue-50 hover:from-purple-100 hover:to-blue-100"
-              onClick={handleAIClick}
-              disabled={isGenerating}
-            >
-              <Sparkles className={`h-4 w-4 mr-2 text-purple-500 group-hover:text-purple-600 transition-colors ${isGenerating ? 'animate-pulse' : ''}`} />
-              <span className="group-hover:text-primary transition-colors font-medium">
-                {isGenerating ? 'Generating Alerts...' : 'AI Alerts'}
-              </span>
-            </Button>
-          </motion.div>
-
-          <motion.div
-            ref={alertsContainerRef}
-            variants={containerVariants}
-            className="space-y-3 h-48 overflow-y-auto pr-1 custom-scrollbar"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
-            {isLoading || isGenerating ? (
-              <div className="text-sm text-gray-500 flex items-center justify-center h-full">
-                {isGenerating ? 'Generating new alerts...' : 'Loading alerts...'}
-              </div>
-            ) : alerts.length === 0 ? (
-              <div className="text-sm text-gray-500 flex flex-col items-center justify-center h-full gap-2">
-                <p>No alerts to display</p>
-                <p className="text-xs text-gray-400">Click the AI Alerts button above to generate alerts</p>
-              </div>
-            ) : (
-              alerts.map((alert) => (
-                <motion.div
-                  key={alert.id}
-                  variants={itemVariants}
-                  className="p-3 rounded-md bg-amber-50 border border-amber-100 hover:bg-amber-100 transition-colors duration-200"
-                >
-                  <div className="flex justify-between items-start">
-                    <div className="flex items-center gap-2">
-                      <AlertTriangle className="h-4 w-4 text-amber-500" />
-                      <h4 className="font-medium text-sm">{alert.heading}</h4>
-                    </div>
-                    <Badge
-                      variant="outline"
-                      className="whitespace-nowrap px-2 py-0.5 text-xs border-amber-200 text-amber-700"
-                    >
-                      {alert.time}
-                    </Badge>
-                  </div>
-                  <p className="text-sm mt-1">{alert.content}</p>
-                </motion.div>
-              ))
-            )}
-=======
           <motion.div
             variants={containerVariants}
             className="space-y-3 h-48 overflow-y-auto pr-1 custom-scrollbar"
@@ -355,7 +179,6 @@ const RightSidebar: React.FC<RightSidebarProps> = ({
                   <p className="text-sm mt-1">{alert.message}</p>
                 </motion.div>
               ))}
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
           </motion.div>
         </motion.div>
 

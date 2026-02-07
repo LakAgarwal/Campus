@@ -7,14 +7,9 @@ import { Calendar, User, Users, Shield, BookOpen, CalendarClock, Rocket, Sparkle
 import Navbar from '@/components/Navbar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { motion, AnimatePresence } from 'framer-motion';
-<<<<<<< HEAD
-import { authLogin, clubAuthLogin, adminAuthLogin } from "@/api/client";
-import { useToast } from "@/components/ui/use-toast";
-=======
 import { useAuthContext } from "@/contexts/AuthContext";
 import { useToast } from "@/components/ui/use-toast";
 import { getApiBaseUrl } from "@/lib/api";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 const SignIn = () => {
@@ -32,53 +27,23 @@ const SignIn = () => {
   const [adminPassword, setAdminPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-<<<<<<< HEAD
-  useEffect(() => {
-    const token = localStorage.getItem('access_token');
-    if (token) {
-      navigate('/homepage');
-    }
-  }, [navigate]);
-=======
   const { hasSession } = useAuthContext();
   useEffect(() => {
     if (hasSession()) {
       navigate('/homepage');
     }
   }, [navigate, hasSession]);
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 
   useEffect(() => {
     setError(null);
   }, [activeTab]);
 
-<<<<<<< HEAD
-=======
   const { signIn } = useAuthContext();
 
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   const handleStudentSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-<<<<<<< HEAD
-    
-    try {
-      await authLogin(email, password);
-      toast({
-        title: "Successfully signed in",
-        description: "Welcome back!",
-      });
-      navigate('/homepage');
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Invalid email or password.";
-      toast({
-        variant: "destructive",
-        title: "Sign in failed",
-        description: message,
-      });
-      setError(message);
-=======
     try {
       const { error: err } = await signIn({ email, password });
       if (err) {
@@ -102,7 +67,6 @@ const SignIn = () => {
         description: "Please try again later.",
       });
       setError("An unexpected error occurred. Please try again.");
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
     } finally {
       setLoading(false);
     }
@@ -112,37 +76,6 @@ const SignIn = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-<<<<<<< HEAD
-
-    try {
-        const data = await clubAuthLogin(clubCode, clubPassword);
-
-        sessionStorage.setItem('club_id', data.club_id.toString());
-        sessionStorage.setItem('club_name', data.clubs.name);
-        sessionStorage.setItem('club_category', data.clubs.category);
-        sessionStorage.setItem('club_admin_id', data.clubs.admin_id);
-        sessionStorage.setItem('club_logged_in', 'true');
-
-        toast({
-            title: "Club Login Successful",
-            description: `Welcome to ${data.clubs.name} dashboard!`,
-        });
-
-        navigate('/club/dashboard');
-    } catch (err: unknown) {
-        const message = err instanceof Error ? err.message : "An error occurred during login.";
-        toast({
-            variant: "destructive",
-            title: "Login Failed",
-            description: message,
-        });
-        setError(message);
-    } finally {
-        setLoading(false);
-    }
-};
-
-=======
     try {
       const base = getApiBaseUrl();
       const res = await fetch(`${base}/clubs/login`, {
@@ -186,32 +119,11 @@ const SignIn = () => {
       setLoading(false);
     }
   };
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 
   const handleAdminSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-<<<<<<< HEAD
-    
-    try {
-      const data = await adminAuthLogin(adminCode, adminPassword);
-      sessionStorage.setItem('admin_id', data.id);
-      sessionStorage.setItem('admin_logged_in', 'true');
-      toast({
-        title: "Admin Login Successful",
-        description: "Welcome back!",
-      });
-      navigate('/dashboard');
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "An error occurred during login.";
-      toast({
-        variant: "destructive",
-        title: "Login Failed",
-        description: message,
-      });
-      setError(message);
-=======
     try {
       const { error: err } = await signIn({ email: adminCode, password: adminPassword });
       if (err) {
@@ -235,7 +147,6 @@ const SignIn = () => {
         description: "Please try again later.",
       });
       setError("An unexpected error occurred. Please try again.");
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
     } finally {
       setLoading(false);
     }

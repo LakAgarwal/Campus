@@ -46,26 +46,26 @@ public class LostFoundController {
     public ResponseEntity<LostItemEntity> getLost(@PathVariable Integer id) {
         return lostItemRepository.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.<LostItemEntity>notFound().build());
     }
 
     @GetMapping("/found/{id}")
     public ResponseEntity<FoundItemEntity> getFound(@PathVariable Integer id) {
         return foundItemRepository.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.<FoundItemEntity>notFound().build());
     }
 
     @PostMapping("/lost")
     public ResponseEntity<LostItemEntity> addLost(@RequestBody LostItemEntity item, Authentication auth) {
-        if (auth == null) return ResponseEntity.status(401).build();
+        if (auth == null) return ResponseEntity.<LostItemEntity>status(401).build();
         item.setUserId((String) auth.getPrincipal());
         return ResponseEntity.ok(lostItemRepository.save(item));
     }
 
     @PostMapping("/found")
     public ResponseEntity<FoundItemEntity> addFound(@RequestBody FoundItemEntity item, Authentication auth) {
-        if (auth == null) return ResponseEntity.status(401).build();
+        if (auth == null) return ResponseEntity.<FoundItemEntity>status(401).build();
         item.setUserId((String) auth.getPrincipal());
         return ResponseEntity.ok(foundItemRepository.save(item));
     }

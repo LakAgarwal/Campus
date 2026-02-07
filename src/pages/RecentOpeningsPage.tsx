@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
 import { api } from "@/api/client";
-=======
-import { apiFetch } from "@/lib/api";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -53,8 +49,7 @@ const RecentOpeningsPage = () => {
     const fetchOpenings = async () => {
       try {
         setLoading(true);
-<<<<<<< HEAD
-        
+
         const openingsData = await api.get<Opening[]>('/openings') || [];
         const formattedOpenings = openingsData.map((opening: Opening & { opening_records?: { skills_required?: string; start_time?: string; duration?: string; max_people?: number }; profiles?: { username?: string; full_name?: string } }) => ({
           ...opening,
@@ -69,16 +64,6 @@ const RecentOpeningsPage = () => {
         setFilteredOpenings(formattedOpenings);
       } catch (error) {
         console.error('Error fetching openings:', error);
-=======
-        const res = await apiFetch<Opening[]>("/openings");
-        if (res.data && Array.isArray(res.data)) {
-          const list = res.data as Opening[];
-          setOpenings(list);
-          setFilteredOpenings(list);
-        }
-      } catch {
-        // ignore
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       } finally {
         setLoading(false);
       }

@@ -1,17 +1,9 @@
 import React, { useRef } from "react";
-<<<<<<< HEAD
 import { User, Search, Plus, QrCode, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/components/ui/use-toast";
 import { getCurrentUserId } from "@/api/client";
-=======
-import { User, Bell, Search, Plus, Scroll, QrCode, LogOut } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
-import { useToast } from "@/components/ui/use-toast";
-import { useAuthContext } from "@/contexts/AuthContext";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,11 +15,8 @@ import TriggerButton from "@/components/ui/buttons/TriggerButton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
-<<<<<<< HEAD
 import NewsletterAlertsPanel from "@/components/homepage/NewsletterAlertsPanel";
 import NotificationPanel from "@/components/homepage/NotificationPanel";
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 
 interface HeaderProps {
   isSearchExpanded: boolean;
@@ -50,15 +39,9 @@ const Header: React.FC<HeaderProps> = ({
   const navigate = useNavigate();
   const { toast } = useToast();
 
-<<<<<<< HEAD
   const handleCreateOpening = async () => {
     const userId = getCurrentUserId();
     if (userId) {
-=======
-  const { hasSession } = useAuthContext();
-  const handleCreateOpening = () => {
-    if (hasSession()) {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       navigate("/create-temporary-opening");
     } else {
       toast({
@@ -74,23 +57,10 @@ const Header: React.FC<HeaderProps> = ({
     <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto px-4 flex justify-between items-center h-16">
         <div className="flex items-center space-x-4">
-<<<<<<< HEAD
           <h1 className="text-xl font-bold text-primary">Campus SETU</h1>
           <NewsletterAlertsPanel />
-=======
-          <h1 className="text-xl font-bold text-primary">Club Scheduler</h1>
-
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <IconButton icon={Scroll} badge={3} />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Newsletters</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
+          <h1 className="text-xl font-bold text-primary">Campus SETU</h1>
+          <NewsletterAlertsPanel />
         </div>
 
         <div
@@ -154,20 +124,7 @@ const Header: React.FC<HeaderProps> = ({
             </Tooltip>
           </TooltipProvider>
 
-<<<<<<< HEAD
           <NotificationPanel />
-=======
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <IconButton icon={Bell} badge={5} />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Notifications</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 
           <TooltipProvider>
             <Tooltip>

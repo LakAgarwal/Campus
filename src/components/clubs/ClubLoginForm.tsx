@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,28 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-<<<<<<< HEAD
-import { clubAuthLogin } from "@/api/client";
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-
-interface ClubData {
-  name: string;
-  category: string;
-  admin_id: string;
-}
-
-interface ClubAuthData {
-  club_id: number;
-  password: string;
-  status: string;
-  clubs: ClubData;
-}
-
-=======
 import { getApiBaseUrl } from "@/lib/api";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 const formSchema = z.object({
   club_code: z.string().length(5, {
     message: "Club code must be exactly 5 characters",
@@ -63,36 +40,6 @@ const ClubLoginForm = () => {
     setIsLoading(true);
     setError(null);
     try {
-<<<<<<< HEAD
-      const trimmedClubCode = values.club_code.trim().toUpperCase();
-      const data = await clubAuthLogin(trimmedClubCode, values.password);
-      if (!data || !data.clubs) {
-        toast({
-          title: "Error",
-          description: "Invalid club code or password. Please try again.",
-          variant: "destructive",
-        });
-        setError("Invalid club code or password.");
-        return;
-      }
-
-      const clubs = data.clubs as { name: string; category: string; admin_id: string };
-      sessionStorage.setItem('club_id', String(data.club_id));
-      sessionStorage.setItem('club_name', clubs.name);
-      sessionStorage.setItem('club_category', clubs.category);
-      sessionStorage.setItem('club_admin_id', clubs.admin_id);
-      sessionStorage.setItem('club_logged_in', 'true');
-
-      toast({
-        title: "Login Successful",
-        description: `Welcome to ${clubs.name} dashboard!`,
-      });
-
-      // Navigate to the club dashboard
-      navigate('/club/dashboard');
-    } catch (error) {
-      console.error("Club login error:", error);
-=======
       const base = getApiBaseUrl();
       const res = await fetch(`${base}/clubs/login`, {
         method: "POST",
@@ -117,7 +64,6 @@ const ClubLoginForm = () => {
       });
       navigate("/club/dashboard");
     } catch {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       toast({
         title: "Login Failed",
         description: "An error occurred during login. Please try again.",

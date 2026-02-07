@@ -14,40 +14,15 @@ interface Category {
   isPreference?: boolean;
 }
 
-<<<<<<< HEAD
 import { Event } from 'src/types/event'; // Import the Event type from the types file
-=======
-interface Event {
-  event_id: number;
-  club_id: number;
-  name: string;
-  datetime: string;
-  location: string;
-  short_description: string;
-  eligibility: string;
-  registration_deadline: string;
-  status: "Open" | "Closing Soon" | "Waitlist" | "Closed";
-  max_attendees: number | null;
-  current_attendees: number;
-  event_thumbnail: string;
-  club_name: string;
-  tags: string[];
-}
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 
 interface MainContentProps {
   viewMode: "grid" | "list";
   setViewMode: (mode: "grid" | "list") => void;
   isMobileView: boolean;
-<<<<<<< HEAD
   filteredEvents: Event[]; // Use the imported Event type
   isLoading: boolean;
   categories: Category[];
-=======
-  filteredEvents: Event[];
-  isLoading: boolean;
-  categories: Category[]; // Using the Category interface defined above
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   onFilterChange: (filters: { 
     categories: string[]; 
     timeRange: number | null; 

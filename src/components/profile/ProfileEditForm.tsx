@@ -10,11 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-<<<<<<< HEAD
-import { api, getAuthToken, getCurrentUserId } from "@/api/client";
-=======
 import { getStoredUserId } from "@/lib/api";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import { toast } from "sonner";
 import { Profile, bloodGroupOptions, branchOptions, yearOfStudyOptions } from "@/types/profileTypes";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -82,58 +78,18 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = ({
 
   const handleSubmit = async (data: ProfileFormValues) => {
     try {
-<<<<<<< HEAD
-      const userId = getCurrentUserId();
-=======
       const userId = getStoredUserId();
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       if (!userId) {
         toast.error("Authentication error. Please sign in again.");
         return;
       }
-<<<<<<< HEAD
-
-      // Update profile
-      const updatedProfile = await api.patch<Profile>(`/profiles/${userId}`, {
-=======
       const updatedProfile: Profile = {
         ...profile,
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
         full_name: data.full_name,
         roll_number: data.roll_number,
         year_of_study: data.year_of_study,
         branch: data.branch,
         blood_group: data.blood_group,
-<<<<<<< HEAD
-      });
-
-      // Upsert optional profile data
-      const optionalPayload = {
-        profileId: profile.profile_id,
-        bio: data.bio,
-        contactInfo: data.contact_info,
-        socialMediaLinks: data.social_media_links,
-        skills: data.skills,
-        projects: data.projects,
-        volunteeringExp: data.volunteering_exp,
-        profilePictureUrl: data.profile_picture_url,
-      };
-      const optionalResult = await api.put<unknown>(`/profiles/${userId}/optional`, optionalPayload);
-
-      // Replace preferences: get existing to delete, then add new
-      const existingPrefs = await api.get<{ id: number }[]>(`/profiles/${userId}/preferences`);
-      for (const p of existingPrefs || []) {
-        await api.delete(`/profiles/${userId}/preferences/${p.id}`);
-      }
-      for (const pref of data.preferences || []) {
-        await api.post(`/profiles/${userId}/preferences`, { preference: pref });
-      }
-
-      toast.success("Profile updated successfully!");
-      onSave(updatedProfile, optionalResult, data.preferences || []);
-    } catch (error) {
-      console.error("Error updating profile:", error);
-=======
       };
       const optionalResult = {
         ...optionalData,
@@ -148,7 +104,6 @@ const ProfileEditForm: React.FC<ProfileEditFormProps> = ({
       toast.success("Profile updated successfully!");
       onSave(updatedProfile, optionalResult, data.preferences || []);
     } catch {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       toast.error("Failed to update profile. Please try again.");
     }
   };

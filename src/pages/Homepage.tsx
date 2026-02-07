@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import React from "react";
 import { useHomepage } from "@/hooks/useHomepage";
 import Sidebar from "@/components/homepage/Sidebar";
@@ -23,10 +19,6 @@ const Homepage = () => {
     isTabletView,
     isLoading,
     filteredEvents,
-<<<<<<< HEAD
-=======
-    alerts,
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
     categories,
     userPreferences,
     handleLogout,
@@ -85,10 +77,7 @@ const Homepage = () => {
           setIsRightSidebarVisible={setIsRightSidebarVisible}
           isMobileView={isMobileView}
           isTabletView={isTabletView}
-<<<<<<< HEAD
-=======
           alerts={alerts}
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
           handleNavigateToBookmarks={handleNavigateToBookmarks}
           handleExploreSection={handleExploreSection}
         />

@@ -44,8 +44,8 @@ public class AlertController {
 
     @DeleteMapping
     public ResponseEntity<Void> deleteByUser(@RequestParam String userId, Authentication auth) {
-        if (auth == null) return ResponseEntity.status(401).build();
-        if (!userId.equals(auth.getPrincipal())) return ResponseEntity.status(403).build();
+        if (auth == null) return ResponseEntity.<Void>status(401).build();
+        if (!userId.equals(auth.getPrincipal())) return ResponseEntity.<Void>status(403).build();
         alertRepository.deleteByUserId(userId);
         return ResponseEntity.noContent().build();
     }

@@ -80,9 +80,10 @@ public class ProfileController {
         if (p == null) return ResponseEntity.notFound().build();
         Integer pid = p.getProfileId();
         if (pid == null) return ResponseEntity.ok(List.of());
-        return profileOptionalRepository.findByProfileId(pid)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.ok(List.of()));
+        List<ProfileOptionalEntity> list = profileOptionalRepository.findByProfileId(pid)
+                .map(List::of)
+                .orElse(List.of());
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping("/{id}/preferences")
@@ -111,7 +112,7 @@ public class ProfileController {
 
     @DeleteMapping("/{id}/preferences/{prefId}")
     public ResponseEntity<Void> deletePreference(@PathVariable String id, @PathVariable Integer prefId, Authentication auth) {
-        if (auth == null || !auth.getPrincipal().equals(id)) return ResponseEntity.status(403).build();
+        if (auth == null || !auth.getPrincipal().equals(id)) return ResponseEntity.<Void>status(403).build();
         userPreferenceRepository.deleteById(prefId);
         return ResponseEntity.noContent().build();
     }

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/connections")
@@ -58,14 +57,14 @@ public class ConnectionController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id, Authentication auth) {
-        if (auth == null) return ResponseEntity.status(401).build();
+    public ResponseEntity<Object> delete(@PathVariable Integer id, Authentication auth) {
+        if (auth == null) return ResponseEntity.<Void>status(401).build();
         return connectionRepository.findById(id)
                 .filter(c -> c.getUser1Id().equals(auth.getPrincipal()) || c.getUser2Id().equals(auth.getPrincipal()))
                 .map(c -> {
                     connectionRepository.delete(c);
                     return ResponseEntity.<Void>noContent().build();
                 })
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.<Void>notFound().build());
     }
 }

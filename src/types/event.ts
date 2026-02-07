@@ -15,11 +15,6 @@ export interface Event {
   event_thumbnail: string;
   club_name: string;
   tags: string[];
-<<<<<<< HEAD
-  event_type: string;
-  payment_link?: string;
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 }
 
 export interface DatabaseEvent {
@@ -164,29 +159,3 @@ export interface EventDetails extends Event {
   optionalDetails?: EventOptionalDetail[];
   socialLinks?: EventSocialLink[];
 }
-<<<<<<< HEAD
-
-export interface VolunteerEvent {
-  id: string;
-  title: string;
-  description: string;
-  event_date: string;
-  location: string;
-  organized_by: string | null;
-  emergency_flag: boolean;
-  created_at: string;
-  thumbnail: string;
-  organizer_name?: string;
-}
-
-export type EventFilter = {
-  searchQuery: string;
-  showEmergencyOnly: boolean;
-}
-
-export interface Profile {
-  id: string;
-  full_name: string;
-}
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325

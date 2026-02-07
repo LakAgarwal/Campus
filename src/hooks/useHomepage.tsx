@@ -1,12 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
-<<<<<<< HEAD
-import { api, getCurrentUserId, clearAuthToken } from "@/api/client";
-=======
 import { apiFetch } from "@/lib/api";
 import { useAuthContext } from "@/contexts/AuthContext";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 
 type EventStatus = "Open" | "Closing Soon" | "Waitlist" | "Closed";
 
@@ -27,11 +23,6 @@ interface DatabaseEvent {
   event_thumbnail: string;
   clubs: { name: string } | null;
   event_tags: { tag: string }[];
-<<<<<<< HEAD
-  event_type: string;
-  payment_link?: string;
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 }
 
 interface Event {
@@ -49,11 +40,6 @@ interface Event {
   event_thumbnail: string;
   club_name: string;
   tags: string[];
-<<<<<<< HEAD
-  event_type: string;
-  payment_link?: string;
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 }
 
 interface UserPreferences {
@@ -83,8 +69,6 @@ export function useHomepage() {
   const [isMobileView, setIsMobileView] = useState(false);
   const [isTabletView, setIsTabletView] = useState(false);
 
-<<<<<<< HEAD
-=======
   const alerts: Alert[] = [
     {
       id: 1,
@@ -109,7 +93,6 @@ export function useHomepage() {
     },
   ];
 
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   const categories = [
     { id: "technical", label: "Technical", isPreference: true },
     { id: "workshop", label: "Workshop", isPreference: true },
@@ -200,30 +183,6 @@ export function useHomepage() {
   const fetchEvents = async () => {
     try {
       setIsLoading(true);
-<<<<<<< HEAD
-      const eventsData = await api.get<DatabaseEvent[]>("/events") || [];
-      const formattedEvents: Event[] = eventsData.map((event: DatabaseEvent) => ({
-        event_id: event.event_id,
-        club_id: event.club_id,
-        name: event.name,
-        datetime: event.datetime,
-        location: event.location,
-        short_description: event.short_description,
-        eligibility: event.eligibility,
-        registration_deadline: event.registration_deadline,
-        status: event.status,
-        max_attendees: event.max_attendees,
-        current_attendees: event.current_attendees ?? 0,
-        event_thumbnail: event.event_thumbnail || "",
-        club_name: (event as unknown as { clubs?: { name: string } })?.clubs?.name || "Club",
-        tags: (event as unknown as { event_tags?: { tag: string }[] })?.event_tags?.map((t) => t.tag) || [],
-        event_type: event.event_type || "open",
-        payment_link: event.payment_link
-      }));
-      setEvents(formattedEvents);
-    } catch (error) {
-      console.error("Error fetching events:", error);
-=======
       const res = await apiFetch<Array<Record<string, unknown>>>("/events");
       if (res.error || !res.data) {
         throw new Error(res.error || "Failed to fetch");
@@ -248,7 +207,6 @@ export function useHomepage() {
       );
       setEvents(formattedEvents);
     } catch {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       toast({
         title: "Error",
         description: "Failed to load events. Please try again later.",
@@ -259,14 +217,9 @@ export function useHomepage() {
     }
   };
 
-<<<<<<< HEAD
-  const handleLogout = () => {
-    clearAuthToken();
-=======
   const { signOut } = useAuthContext();
   const handleLogout = () => {
     signOut();
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
     toast({
       title: "Logged out successfully",
       description: "You have been logged out of your account",
@@ -303,29 +256,10 @@ export function useHomepage() {
   };
 
   const handleExploreSection = (section: string) => {
-<<<<<<< HEAD
-    switch (section) {
-      case "Like-Minded People":
-        navigate("/people");
-        break;
-      case "Resources":
-        navigate("/resources");
-        break;
-      case "Recent Openings":
-        navigate("/openings");
-        break;
-      case "Articles":
-        navigate("/articles");
-        break;
-      default:
-        break;
-    }
-=======
     toast({
       title: "Coming Soon",
       description: `${section} will be available soon`,
     });
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   };
 
   const handleNavigateToProfile = () => {
@@ -338,25 +272,8 @@ export function useHomepage() {
 
   const fetchUserPreferences = async () => {
     try {
-<<<<<<< HEAD
-      const userId = getCurrentUserId();
-      if (!userId) return;
-
-      const preferences = await api.get<{ preference: string }[]>(`/profiles/${userId}/preferences`);
-
-      if (preferences && preferences.length > 0) {
-        const userPrefs = {
-          categories: preferences.map((p) => p.preference.toLowerCase()),
-          lastUpdated: new Date().toISOString(),
-        };
-        setUserPreferences(userPrefs);
-      } else {
-        setUserPreferences(null);
-      }
-=======
       // Backend does not have user_preferences yet; leave preferences empty
       setUserPreferences(null);
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
     } catch (error) {
       console.error("Error fetching user preferences:", error);
     }
@@ -459,10 +376,7 @@ export function useHomepage() {
     events,
     isLoading,
     filteredEvents,
-<<<<<<< HEAD
-=======
     alerts,
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
     categories,
     userPreferences,
     handleLogout,

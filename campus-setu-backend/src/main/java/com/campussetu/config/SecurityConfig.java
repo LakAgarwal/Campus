@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**", "/auth/login", "/auth/register").permitAll()
+                        .requestMatchers("/auth/**", "/auth/login", "/auth/register","http://localhost:8080/api/profiles").permitAll()
                         .requestMatchers("/club-auth/**", "/admin-auth/**").permitAll()
                         .requestMatchers("/users/**").permitAll()
                         .anyRequest().authenticated()

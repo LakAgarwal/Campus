@@ -1,45 +1,19 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-<<<<<<< HEAD
-import { format, isAfter, isBefore, isToday } from "date-fns";
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
+import { format, isAfter, isBefore, isToday } from "date-fns"; // Keep the imports
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+   return twMerge(clsx(inputs))
 }
-<<<<<<< HEAD
 
 export function formatEventDate(dateString: string): string {
-  const date = new Date(dateString);
-  return format(date, "EEE, MMM d, yyyy • h:mm a");
-}
-
-export function formatShortDate(dateString: string): string {
-  const date = new Date(dateString);
-  return format(date, "MMM d, yyyy");
-}
-
-export function isEventOngoing(dateString: string): boolean {
-  const eventDate = new Date(dateString);
-  const now = new Date();
-  
-  // Consider an event ongoing if it's today
-  return isToday(eventDate);
+   const date = new Date(dateString);
+   // ... rest of your formatting logic
+   return format(date, "PPP"); 
 }
 
 export function isEventPast(dateString: string): boolean {
-  const eventDate = new Date(dateString);
-  const now = new Date();
-  
-  return isBefore(eventDate, now) && !isToday(eventDate);
+    const eventDate = new Date(dateString);
+    const now = new Date();
+    return isAfter(eventDate, now);
 }
-
-export function isEventUpcoming(dateString: string): boolean {
-  const eventDate = new Date(dateString);
-  const now = new Date();
-  
-  return isAfter(eventDate, now);
-}
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325

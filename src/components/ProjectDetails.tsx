@@ -13,18 +13,13 @@ import {
   FileText, 
   List,
   User,
-<<<<<<< HEAD
   Users,
   CheckCircle2,
   ArrowLeft
-=======
-  Users 
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
 
 interface ProjectDetailsProps {
@@ -37,19 +32,6 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectData, joinStatus
   const { toast } = useToast();
   const navigate = useNavigate();
   const [showFullDescription, setShowFullDescription] = useState(false);
-=======
-
-interface ProjectDetailsProps {
-  projectData: ProjectData;
-}
-
-const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectData }) => {
-  const { toast } = useToast();
-  const [showFullDescription, setShowFullDescription] = useState(false);
-  const [joinStatus, setJoinStatus] = useState<JoinStatus>(
-    projectData.participantStatus ? projectData.participantStatus : 'Not Joined'
-  );
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   
   const { 
     opening, 
@@ -85,7 +67,6 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectData }) => {
   const eligibilityList = eligibility
     .split('\n')
     .filter(item => item.trim().length > 0);
-<<<<<<< HEAD
 
   const renderJoinButton = () => {
     switch (joinStatus) {
@@ -123,16 +104,6 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectData }) => {
       default:
         return null;
     }
-=======
-  
-  const handleJoinProject = () => {
-    // In a real app, this would call an API to join the project
-    setJoinStatus('Pending');
-    toast({
-      title: "Join request submitted",
-      description: "Your request to join this project has been submitted and is pending approval.",
-    });
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   };
   
   const renderOptionalDetail = (detail: OpeningOptionalDetail) => {
@@ -158,8 +129,6 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectData }) => {
       </div>
     );
   };
-<<<<<<< HEAD
-
   return (
     <div className="container mx-auto max-w-6xl py-10 px-4 space-y-8 reveal-animation">
       {/* Go Back Button */}
@@ -173,12 +142,6 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectData }) => {
           <span>Go Back</span>
         </Button>
       </div>
-
-=======
-  
-  return (
-    <div className="container mx-auto max-w-6xl py-10 px-4 space-y-8 reveal-animation">
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           {/* Title and Category */}
@@ -222,11 +185,6 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectData }) => {
               }`}>
                 {long_description}
               </p>
-<<<<<<< HEAD
-            
-=======
-              
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
               {long_description.length > 350 && (
                 <Button
                   variant="ghost"
@@ -248,8 +206,6 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectData }) => {
                 </Button>
               )}
             </div>
-<<<<<<< HEAD
-            
             {/* Media Gallery */}
             {media && media.length > 0 && (
               <div>
@@ -294,78 +250,12 @@ const ProjectDetails: React.FC<ProjectDetailsProps> = ({ projectData }) => {
         </div>
   
         {/* Sidebar */}
-=======
-          </div>
-          
-          {/* Media Gallery */}
-          {media && media.length > 0 && (
-            <div>
-              <ProjectGallery media={media} />
-            </div>
-          )}
-          
-          {/* Eligibility */}
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold">
-              Eligibility & Requirements
-            </h2>
-            
-            <div className="space-y-2">
-              {eligibilityList.map((item, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <div className="mt-0.5 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
-                    <List size={14} />
-                  </div>
-                  <p className="text-muted-foreground">{item.replace(/^- /, '')}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          {/* Optional Details */}
-          {optionalDetails && optionalDetails.length > 0 && (
-            <div className="space-y-5">
-              <h2 className="text-xl font-semibold">Additional Information</h2>
-              <div className="space-y-6 divide-y">
-                {optionalDetails.map(renderOptionalDetail)}
-              </div>
-            </div>
-          )}
-          
-          {/* Contact Info */}
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold">Contact Information</h2>
-            <p className="text-muted-foreground whitespace-pre-line">{contact}</p>
-          </div>
-        </div>
-        
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
         <div className="space-y-6">
           {/* Join Button */}
           <div className="glass-panel p-5 text-center space-y-4 sticky top-6">
             <h3 className="text-lg font-semibold">Interested in this project?</h3>
             
-<<<<<<< HEAD
             {renderJoinButton()}
-=======
-            {joinStatus === 'Not Joined' ? (
-              <Button
-                className="w-full py-6 text-base font-medium"
-                disabled={true} // For development, we're keeping this inactive
-                onClick={handleJoinProject}
-              >
-                Join Project
-              </Button>
-            ) : joinStatus === 'Pending' ? (
-              <Button variant="outline" className="w-full py-6 text-base" disabled>
-                Request Pending
-              </Button>
-            ) : (
-              <Button variant="outline" className="w-full py-6 text-base bg-green-50 border-green-200 text-green-700" disabled>
-                Accepted ✓
-              </Button>
-            )}
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
             
             <p className="text-xs text-muted-foreground">
               By joining, you agree to the project's terms and conditions

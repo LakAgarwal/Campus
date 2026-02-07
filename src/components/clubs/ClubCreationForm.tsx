@@ -10,11 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
-<<<<<<< HEAD
-import { api, getCurrentUserId } from "@/api/client";
-=======
 import { apiFetch, getStoredUserId } from "@/lib/api";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 
 const formSchema = z.object({
   club_name: z.string().min(3, {
@@ -50,26 +46,6 @@ const ClubCreationForm = () => {
   const onSubmit = async (values: FormValues) => {
     setIsLoading(true);
     try {
-<<<<<<< HEAD
-      const userId = getCurrentUserId();
-      if (!userId) {
-        throw new Error("User is not authenticated");
-      }
-      const result = await api.post<{ clubCode?: string; club_code?: string }>('/clubs', {
-        name: values.club_name,
-        description: values.description || null,
-        category: values.category,
-        password: values.password,
-      });
-      const generatedCode = result?.clubCode ?? result?.club_code;
-      setClubCode(generatedCode ?? null);
-      toast({
-        title: "Club Created Successfully",
-        description: `Your club '${values.club_name}' has been created!`,
-      });
-    } catch (error) {
-      console.error("Error creating club:", error);
-=======
       const userId = getStoredUserId();
       if (!userId) {
         throw new Error("User is not authenticated");
@@ -100,7 +76,6 @@ const ClubCreationForm = () => {
           : `Your club '${values.club_name}' has been created!`,
       });
     } catch (error) {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       toast({
         title: "Error Creating Club",
         description: error instanceof Error ? error.message : "An unexpected error occurred",

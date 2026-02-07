@@ -3,11 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-<<<<<<< HEAD
-import { api } from "@/api/client";
-=======
 import { apiFetch } from "@/lib/api";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import { useToast } from "@/components/ui/use-toast";
 import {
   Form,
@@ -28,17 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-<<<<<<< HEAD
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
-=======
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
@@ -128,16 +114,6 @@ const eventFormSchema = z.object({
   }).pipe(z.number().min(1, "Maximum attendees must be at least 1")),
   event_thumbnail: z.string().optional(),
   tags: z.array(z.string()).optional(),
-<<<<<<< HEAD
-  event_type: z.enum(["open", "selective", "paid"]).default("open"),
-  payment_link: z.string().optional(),
-  questions: z.array(z.object({
-    question: z.string().min(1, "Question is required"),
-    is_payment: z.boolean().default(false),
-    display_order: z.number()
-  })).optional(),
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 
   // Event Agenda
   agenda: z.array(z.object({
@@ -268,12 +244,6 @@ const CreateEventForm = () => {
       max_attendees: 1,
       event_thumbnail: "",
       tags: [],
-<<<<<<< HEAD
-      event_type: "open",
-      payment_link: "",
-      questions: [],
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       agenda: [],
       speakers: [],
       sponsors: [],
@@ -344,14 +314,6 @@ const CreateEventForm = () => {
     name: "sponsors"
   });
 
-<<<<<<< HEAD
-  const questionsFields = useFieldArray({
-    control: form.control,
-    name: "questions"
-  });
-
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   // DnD sensors
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -365,10 +327,6 @@ const CreateEventForm = () => {
     try {
       setIsSubmitting(true);
       console.log("Form submission started with data:", data);
-<<<<<<< HEAD
-      console.log("Optional details data:", data.optional_details);
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       
       const clubId = sessionStorage.getItem('club_id');
       console.log("Club ID from session:", clubId);
@@ -377,167 +335,6 @@ const CreateEventForm = () => {
         throw new Error("Club not authenticated");
       }
 
-<<<<<<< HEAD
-      // Generate a unique 5-digit event code once
-      const eventCode = parseInt(Math.floor(10000 + Math.random() * 90000).toString());
-      console.log("Generated event code:", eventCode);
-
-      const eventJson = {
-        event_id: eventCode,
-        club_id: parseInt(clubId),
-        name: data.name || "",
-        datetime: data.datetime || "",
-        location: data.location || "",
-        short_description: data.short_description || "",
-        eligibility: data.eligibility || "",
-        registration_deadline: data.registration_deadline || "",
-        status: data.status || "Open",
-        max_attendees: data.max_attendees || 1,
-        current_attendees: 0,
-        event_thumbnail: data.event_thumbnail || 'https://picsum.photos/800/400',
-        is_deleted: false,
-        event_type: data.event_type || "open",
-        payment_link: data.event_type === "paid" ? data.payment_link : null,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-        
-        // Tags
-        tags: data.tags || [],
-        
-        // Agenda
-        agenda: (data.agenda || []).map(item => ({
-          title: item.title || "",
-          description: item.description || "",
-          start_time: item.start_time || "",
-          end_time: item.end_time || "",
-          location: item.location || "",
-          display_order: item.display_order || 0
-        })),
-        
-        // Speakers
-        speakers: (data.speakers || []).map(speaker => ({
-          name: speaker.name || "",
-          bio: speaker.bio || "",
-          role: speaker.role || "",
-          display_order: speaker.display_order || 0
-        })),
-        
-        // Sponsors
-        sponsors: (data.sponsors || []).map(sponsor => ({
-          name: sponsor.name || "",
-          description: sponsor.description || "",
-          logo_url: sponsor.logo_url || "",
-          website_url: sponsor.website_url || "",
-          sponsorship_level: sponsor.sponsorship_level || "",
-          display_order: sponsor.display_order || 0
-        })),
-        
-        // Optional Details
-        optional_details: (data.optional_details || []).map(detail => ({
-          heading: detail.heading || "",
-          content: detail.content || "",
-          subheading: detail.subheading || "",
-          display_order: detail.display_order || 0
-        })),
-        
-        // FAQs
-        faqs: (data.faqs || []).map(faq => ({
-          question: faq.question || "",
-          answer: faq.answer || "",
-          display_order: faq.display_order || 0
-        })),
-        
-        // Prizes
-        prizes: (data.prizes || []).map(prize => ({
-          title: prize.title || "",
-          description: prize.description || "",
-          value: prize.value || "",
-          position: prize.position || "",
-          display_order: prize.display_order || 0
-        })),
-        
-        // Resources
-        resources: (data.resources || []).map(resource => ({
-          title: resource.title || "",
-          url: resource.url || "",
-          description: resource.description || "",
-          type: resource.type || "",
-          display_order: resource.display_order || 0
-        })),
-        
-        // Media
-        media: (data.media || []).map(media => ({
-          type: media.type || "Image",
-          url: media.url || "",
-          caption: media.caption || "",
-          display_order: media.display_order || 0
-        })),
-        
-        // Links
-        links: (data.links || []).map(link => ({
-          link_type: link.link_type || "",
-          url: link.url || "",
-          label: link.label || "",
-          display_order: link.display_order || 0
-        })),
-        
-        // Contacts
-        contacts: (data.contacts || []).map(contact => ({
-          name: contact.name || "",
-          email: contact.email || "",
-          phone: contact.phone || "",
-          role: contact.role || "",
-          display_order: contact.display_order || 0
-        })),
-        
-        // Social Links
-        social_links: (data.social_links || []).map(link => ({
-          platform: link.platform || "",
-          url: link.url || "",
-          display_order: link.display_order || 0
-        })),
-        
-        // Registration Questions
-        questions: (data.questions || []).map(q => ({
-          question: q.question || "",
-          is_payment: q.is_payment || false,
-          display_order: q.display_order || 0
-        })),
-        
-        // Metadata
-        metadata: {
-          created_by: clubId,
-          created_from: "web",
-          browser_info: navigator.userAgent,
-          ip_address: "",
-          device_type: "desktop",
-          platform: "web",
-          last_activity: new Date().toISOString()
-        }
-      };
-
-      // Log the complete JSON object
-      console.log("Complete Event JSON:", JSON.stringify(eventJson, null, 2));
-      
-      const event = await api.post<{ eventId: number }>('/events', {
-        clubId: parseInt(clubId),
-        name: data.name,
-        datetime: data.datetime,
-        location: data.location,
-        shortDescription: data.short_description,
-        eligibility: data.eligibility,
-        registrationDeadline: data.registration_deadline,
-        status: data.status,
-        maxAttendees: data.max_attendees,
-        eventThumbnail: data.event_thumbnail || 'https://picsum.photos/800/400',
-        eventType: data.event_type,
-        paymentLink: data.event_type === "paid" ? data.payment_link : null,
-      });
-
-      const eventId = event?.eventId ?? (event as { event_id?: number })?.event_id;
-      if (eventId && data.questions && data.questions.length > 0) {
-        await api.post(`/events/${eventId}/questions`, data.questions.map(q => ({ question: q.question })));
-=======
       const body = {
         club_id: parseInt(clubId, 10),
         name: data.name,
@@ -581,7 +378,6 @@ const CreateEventForm = () => {
       });
       if (res.error || !res.data) {
         throw new Error(res.error || "Failed to create event");
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       }
 
       toast({
@@ -704,11 +500,7 @@ const CreateEventForm = () => {
         <Form {...form}>
           {/* Main Tabs */}
           <Tabs defaultValue="details" className="w-full">
-<<<<<<< HEAD
-            <TabsList className="grid grid-cols-7 gap-2 p-2 bg-gray-100 rounded-lg">
-=======
             <TabsList className="grid grid-cols-6 gap-2 p-2 bg-gray-100 rounded-lg">
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
               <TabsTrigger value="details" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">
                 Event Details
               </TabsTrigger>
@@ -727,12 +519,6 @@ const CreateEventForm = () => {
               <TabsTrigger value="faqs" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">
                 FAQs
               </TabsTrigger>
-<<<<<<< HEAD
-              <TabsTrigger value="registration" className="data-[state=active]:bg-white data-[state=active]:shadow-sm">
-                Registration
-              </TabsTrigger>
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
             </TabsList>
 
             <AnimatePresence>
@@ -747,15 +533,9 @@ const CreateEventForm = () => {
                   <Card>
                     <CardHeader className="text-center">
                       <CardTitle>Event Information</CardTitle>
-<<<<<<< HEAD
-                      <CardDescription>
-                        Fill in the essential information for your event
-                      </CardDescription>
-=======
                       <p className="text-sm text-muted-foreground">
                         Fill in the essential information for your event
                       </p>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                     </CardHeader>
                     <CardContent className="space-y-6">
                       <FormField
@@ -983,15 +763,9 @@ const CreateEventForm = () => {
                   <Card className="w-full">
                     <CardHeader className="text-center">
                       <CardTitle>Event Schedule</CardTitle>
-<<<<<<< HEAD
-                      <CardDescription>
-                        Add and organize your event schedule items (up to 6)
-                      </CardDescription>
-=======
                       <p className="text-sm text-muted-foreground">
                         Add and organize your event schedule items (up to 6)
                       </p>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                     </CardHeader>
                     <CardContent className="w-full">
                       <div className="flex justify-end mb-4">
@@ -1165,15 +939,9 @@ const CreateEventForm = () => {
                   <Card className="w-full">
                     <CardHeader className="text-center">
                       <CardTitle>Event Speakers</CardTitle>
-<<<<<<< HEAD
-                      <CardDescription>
-                        Add speakers and their details
-                      </CardDescription>
-=======
                       <p className="text-sm text-muted-foreground">
                         Add speakers and their details
                       </p>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                     </CardHeader>
                     <CardContent className="w-full">
                       <div className="flex justify-end mb-4">
@@ -1291,15 +1059,9 @@ const CreateEventForm = () => {
                   <Card className="w-full">
                     <CardHeader className="text-center">
                       <CardTitle>Event Sponsors</CardTitle>
-<<<<<<< HEAD
-                      <CardDescription>
-                        Add sponsor details and their information
-                      </CardDescription>
-=======
                       <p className="text-sm text-muted-foreground">
                         Add sponsor details and their information
                       </p>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                     </CardHeader>
                     <CardContent className="w-full">
                       <div className="flex justify-end mb-4">
@@ -1475,15 +1237,9 @@ const CreateEventForm = () => {
                   <Card className="w-full">
                     <CardHeader className="text-center">
                       <CardTitle>Custom Extra Fields</CardTitle>
-<<<<<<< HEAD
-                      <CardDescription>
-                        Add custom fields for additional information (up to 5)
-                      </CardDescription>
-=======
                       <p className="text-sm text-muted-foreground">
                         Add custom fields for additional information (up to 5)
                       </p>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                     </CardHeader>
                     <CardContent className="w-full">
                       <div className="flex justify-end mb-4">
@@ -1493,20 +1249,12 @@ const CreateEventForm = () => {
                           size="sm"
                           onClick={() => {
                             if (optionalDetailsFields.fields.length < 5) {
-<<<<<<< HEAD
-                              console.log("Adding new optional detail field");
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                               optionalDetailsFields.append({
                                 heading: "",
                                 content: "",
                                 subheading: "",
                                 display_order: optionalDetailsFields.fields.length + 1
                               });
-<<<<<<< HEAD
-                              console.log("Current optional details:", form.getValues("optional_details"));
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                             } else {
                               toast({
                                 title: "Maximum Items Reached",
@@ -1543,10 +1291,6 @@ const CreateEventForm = () => {
                                       variant="ghost"
                                       size="sm"
                                       onClick={() => {
-<<<<<<< HEAD
-                                        console.log("Removing optional detail at index:", index);
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                                         optionalDetailsFields.remove(index);
                                         const updatedFields = optionalDetailsFields.fields
                                           .filter((_, i) => i !== index)
@@ -1554,10 +1298,6 @@ const CreateEventForm = () => {
                                             ...field,
                                             display_order: i + 1
                                           }));
-<<<<<<< HEAD
-                                        console.log("Updated optional details:", updatedFields);
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                                         form.setValue("optional_details", updatedFields);
                                       }}
                                     >
@@ -1627,15 +1367,9 @@ const CreateEventForm = () => {
                   <Card className="w-full">
                     <CardHeader className="text-center">
                       <CardTitle>Frequently Asked Questions</CardTitle>
-<<<<<<< HEAD
-                      <CardDescription>
-                        Add common questions and answers about your event (up to 5)
-                      </CardDescription>
-=======
                       <p className="text-sm text-muted-foreground">
                         Add common questions and answers about your event (up to 5)
                       </p>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                     </CardHeader>
                     <CardContent className="w-full">
                       <div className="flex justify-end mb-4">
@@ -1741,151 +1475,6 @@ const CreateEventForm = () => {
                   </Card>
                 </motion.div>
               </TabsContent>
-<<<<<<< HEAD
-
-              <TabsContent value="registration" className="space-y-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Registration Settings</CardTitle>
-                    <CardDescription>
-                      Configure how participants can register for your event
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    <FormField
-                      control={form.control}
-                      name="event_type"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Registration Type</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
-                            <FormControl>
-                              <SelectTrigger>
-                                <SelectValue placeholder="Select registration type" />
-                              </SelectTrigger>
-                            </FormControl>
-                            <SelectContent>
-                              <SelectItem value="open">Open Registration</SelectItem>
-                              <SelectItem value="selective">Select Participants Manually</SelectItem>
-                              <SelectItem value="paid">Paid Registration</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    {form.watch("event_type") === "paid" && (
-                      <FormField
-                        control={form.control}
-                        name="payment_link"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Payment Link</FormLabel>
-                            <FormControl>
-                              <Input {...field} placeholder="Enter payment link" />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    )}
-
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center">
-                        <h3 className="text-lg font-semibold">Questions For Users</h3>
-                        <Button
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => {
-                            const currentQuestions = form.getValues("questions") || [];
-                            questionsFields.append({
-                              question: "",
-                              is_payment: false,
-                              display_order: currentQuestions.length
-                            });
-                          }}
-                        >
-                          <Plus className="h-4 w-4 mr-2" />
-                          Add Question
-                        </Button>
-                      </div>
-
-                      <DndContext
-                        sensors={sensors}
-                        collisionDetection={closestCenter}
-                        onDragEnd={(event) => handleDragEnd(event, questionsFields)}
-                      >
-                        <SortableContext
-                          items={questionsFields.fields.map((field) => field.id)}
-                          strategy={verticalListSortingStrategy}
-                        >
-                          <div className="space-y-4">
-                            {questionsFields.fields.map((field, index) => (
-                              <motion.div
-                                key={field.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
-                                transition={{ duration: 0.2 }}
-                              >
-                                <SortableItem id={field.id}>
-                                  <Card className="w-full">
-                                    <CardContent className="pt-6">
-                                      <div className="flex justify-between items-start mb-4">
-                                        <div className="flex items-center gap-2">
-                                          <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            className="cursor-move"
-                                          >
-                                            <ChevronUp className="h-4 w-4" />
-                                          </Button>
-                                          <span className="text-sm font-medium">
-                                            Question {index + 1}
-                                          </span>
-                                        </div>
-                                        <Button
-                                          variant="ghost"
-                                          size="icon"
-                                          onClick={() => questionsFields.remove(index)}
-                                          className="text-destructive hover:text-destructive"
-                                        >
-                                          <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                      </div>
-
-                                      <FormField
-                                        control={form.control}
-                                        name={`questions.${index}.question`}
-                                        render={({ field }) => (
-                                          <FormItem>
-                                            <FormControl>
-                                              <Input 
-                                                {...field} 
-                                                placeholder="Enter your question"
-                                                className="w-full"
-                                              />
-                                            </FormControl>
-                                            <FormMessage />
-                                          </FormItem>
-                                        )}
-                                      />
-                                    </CardContent>
-                                  </Card>
-                                </SortableItem>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </SortableContext>
-                      </DndContext>
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
             </AnimatePresence>
           </Tabs>
 
@@ -1919,15 +1508,9 @@ const CreateEventForm = () => {
                     <Card className="w-full">
                       <CardHeader className="text-center">
                         <CardTitle>Event Prizes</CardTitle>
-<<<<<<< HEAD
-                        <CardDescription>
-                          Add prize details and rewards for participants
-                        </CardDescription>
-=======
                         <p className="text-sm text-muted-foreground">
                           Add prize details and rewards for participants
                         </p>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                       </CardHeader>
                       <CardContent className="w-full">
                         <div className="flex justify-end mb-4">
@@ -2067,15 +1650,9 @@ const CreateEventForm = () => {
                     <Card className="w-full">
                       <CardHeader className="text-center">
                         <CardTitle>Event Resources</CardTitle>
-<<<<<<< HEAD
-                        <CardDescription>
-                          Add resources and materials for participants
-                        </CardDescription>
-=======
                         <p className="text-sm text-muted-foreground">
                           Add resources and materials for participants
                         </p>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                       </CardHeader>
                       <CardContent className="w-full">
                         <div className="flex justify-end mb-4">
@@ -2215,15 +1792,9 @@ const CreateEventForm = () => {
                     <Card className="w-full">
                       <CardHeader className="text-center">
                         <CardTitle>Event Media</CardTitle>
-<<<<<<< HEAD
-                        <CardDescription>
-                          Add media content and promotional materials
-                        </CardDescription>
-=======
                         <p className="text-sm text-muted-foreground">
                           Add media content and promotional materials
                         </p>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                       </CardHeader>
                       <CardContent className="w-full">
                         <div className="flex justify-end mb-4">
@@ -2358,15 +1929,9 @@ const CreateEventForm = () => {
                     <Card className="w-full">
                       <CardHeader className="text-center">
                         <CardTitle>Important Links</CardTitle>
-<<<<<<< HEAD
-                        <CardDescription>
-                          Add important links and references for participants
-                        </CardDescription>
-=======
                         <p className="text-sm text-muted-foreground">
                           Add important links and references for participants
                         </p>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                       </CardHeader>
                       <CardContent className="w-full">
                         <div className="flex justify-end mb-4">
@@ -2508,15 +2073,9 @@ const CreateEventForm = () => {
                     <Card className="w-full">
                       <CardHeader className="text-center">
                         <CardTitle>Event Contacts</CardTitle>
-<<<<<<< HEAD
-                        <CardDescription>
-                          Add contact information for event organizers and support
-                        </CardDescription>
-=======
                         <p className="text-sm text-muted-foreground">
                           Add contact information for event organizers and support
                         </p>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                       </CardHeader>
                       <CardContent className="w-full">
                         <div className="flex justify-end mb-4">
@@ -2645,15 +2204,9 @@ const CreateEventForm = () => {
                     <Card className="w-full">
                       <CardHeader className="text-center">
                         <CardTitle>Social Media Links</CardTitle>
-<<<<<<< HEAD
-                        <CardDescription>
-                          Add social media links for your event
-                        </CardDescription>
-=======
                         <p className="text-sm text-muted-foreground">
                           Add social media links for your event
                         </p>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                       </CardHeader>
                       <CardContent className="w-full">
                         <div className="flex justify-end mb-4">

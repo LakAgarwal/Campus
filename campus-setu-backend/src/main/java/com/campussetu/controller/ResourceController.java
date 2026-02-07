@@ -27,7 +27,7 @@ public class ResourceController {
     public ResponseEntity<ResourceEntity> getById(@PathVariable String id) {
         return resourceRepository.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.<ResourceEntity>notFound().build());
     }
 
     @PostMapping

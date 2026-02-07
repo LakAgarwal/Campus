@@ -82,17 +82,6 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
     ];
 
     const skillLower = skill.toLowerCase();
-<<<<<<< HEAD
-    if (techSkills.some((tech) => skillLower.includes(tech))) return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100";
-    if (designSkills.some((design) => skillLower.includes(design))) return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100";
-    if (softSkills.some((soft) => skillLower.includes(soft))) return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-100";
-    return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-100";
-  };
-
-  const skills = user.optional?.skills 
-    ? user.optional.skills.split(",").map(s => s.trim()).filter(s => s.length > 0)
-    : [];
-=======
     if (techSkills.some((tech) => skillLower.includes(tech))) return "blue";
     if (designSkills.some((design) => skillLower.includes(design)))
       return "green";
@@ -101,7 +90,6 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
   };
 
   const skills = user.optional?.skills?.split(",").map((s) => s.trim()) || [];
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   const displayedSkills = skills.slice(0, 3);
   const hasMoreSkills = skills.length > 3;
 
@@ -215,48 +203,13 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
           </div>
 
           {/* Skills Section */}
-<<<<<<< HEAD
-          {skills.length > 0 && (
-=======
           {user.optional?.skills && (
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
             <div className="mb-4">
               {/* Header Section */}
               <div className="flex items-center justify-between mb-2">
                 <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   Skills
                 </h3>
-<<<<<<< HEAD
-                {hasMoreSkills && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-xs text-primary hover:text-primary/80"
-                    onClick={() => setShowSkills(true)}
-                  >
-                    View All
-                  </Button>
-                )}
-              </div>
-
-              {/* Skills Display */}
-              <div className="flex flex-wrap gap-2">
-                {displayedSkills.map((skill, index) => (
-                  <Badge
-                    key={index}
-                    variant="secondary"
-                    className={getSkillColor(skill)}
-                  >
-                    {skill}
-                  </Badge>
-                ))}
-                {hasMoreSkills && (
-                  <Badge variant="outline" className="text-gray-500">
-                    +{skills.length - 3} more
-                  </Badge>
-                )}
-              </div>
-=======
                 <Button
                   variant="ghost"
                   size="sm"
@@ -306,7 +259,6 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
                   </p>
                 );
               })()}
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
             </div>
           )}
 
@@ -326,11 +278,6 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
 
       {/* Skills Dialog */}
       <Dialog open={showSkills} onOpenChange={setShowSkills}>
-<<<<<<< HEAD
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle>Skills</DialogTitle>
-=======
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle className="flex items-center justify-between">
@@ -344,23 +291,17 @@ const UserCard: React.FC<UserCardProps> = ({ user }) => {
                 <X className="h-4 w-4" />
               </Button>
             </DialogTitle>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
           </DialogHeader>
           <div className="flex flex-wrap gap-2 mt-4">
             {skills.map((skill, index) => (
               <Badge
                 key={index}
-<<<<<<< HEAD
-                variant="secondary"
-                className={getSkillColor(skill)}
-=======
                 variant="outline"
                 className={`text-sm border-${getSkillColor(
                   skill
                 )}/20 bg-${getSkillColor(skill)}/10 hover:bg-${getSkillColor(
                   skill
                 )}/20 transition-colors`}
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
               >
                 {skill}
               </Badge>

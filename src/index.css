@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700&display=swap");
-
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,7 +5,6 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-<<<<<<< HEAD
     --foreground: 222.2 84% 4.9%;
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -179,27 +173,6 @@
     --volunteer-sidebar-accent-foreground: 240 4.8% 95.9%;
     --volunteer-sidebar-border: 240 3.7% 15.9%;
     --volunteer-sidebar-ring: 217.2 91.2% 59.8%;
-=======
-    --foreground: 224 71.4% 4.1%;
-    --card: 0 0% 100%;
-    --card-foreground: 224 71.4% 4.1%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 224 71.4% 4.1%;
-    --primary: 346 89% 60%;
-    --primary-foreground: 210 20% 98%;
-    --secondary: 246 83.3% 59%;
-    --secondary-foreground: 210 20% 98%;
-    --muted: 220 14.3% 95.9%;
-    --muted-foreground: 220 8.9% 46.1%;
-    --accent: 220 14.3% 95.9%;
-    --accent-foreground: 220.9 39.3% 11%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 20% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 224 71.4% 4.1%;
-    --radius: 0.75rem;
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   }
 
   * {
@@ -207,7 +180,6 @@
   }
 
   body {
-<<<<<<< HEAD
     @apply bg-background text-foreground;
   }
 }
@@ -477,45 +449,10 @@
   }
 
   .club-scrollbar::-webkit-scrollbar-track {
-=======
-    @apply bg-background text-foreground antialiased;
-  }
-
-  .header-fade {
-    animation: header-fade 0.5s ease-out forwards;
-  }
-
-  @keyframes header-fade {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .card-hover {
-    @apply transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1;
-  }
-
-  .glass-effect {
-    @apply bg-white/80 backdrop-blur-md border border-white/20;
-  }
-
-  /* Custom scrollbar styles */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-track {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
     background: #f1f1f1;
     border-radius: 10px;
   }
 
-<<<<<<< HEAD
   .club-scrollbar::-webkit-scrollbar-thumb {
     background: #d4d4d8;
     border-radius: 10px;
@@ -677,46 +614,3 @@ html {
 .shimmer-card {
   @apply relative overflow-hidden;
 }
-
-=======
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 10px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(5px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .animate-fadeIn {
-    animation: fadeIn 0.2s ease-in-out forwards;
-  }
-
-  @keyframes blink {
-    0% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.5;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-
-  .animate-blink {
-    animation: blink 1s ease-in-out infinite;
-  }
-}
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325

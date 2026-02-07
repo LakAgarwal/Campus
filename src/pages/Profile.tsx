@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-import { api, getAuthToken, getCurrentUserId } from "@/api/client";
-=======
 import { useAuthContext } from "@/contexts/AuthContext";
 import { getStoredUserId } from "@/lib/api";
 import { apiFetch } from "@/lib/api";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import ProfileCard from "@/components/profile/ProfileCard";
 import ProfileEditForm from "@/components/profile/ProfileEditForm";
 import ProfileSidebar from "@/components/profile/ProfileSidebar";
@@ -32,14 +28,9 @@ const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
-<<<<<<< HEAD
-  useEffect(() => {
-    if (!getAuthToken()) {
-=======
   const { hasSession } = useAuthContext();
   useEffect(() => {
     if (!hasSession()) {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       toast({
         title: "Authentication required",
         description: "Please sign in to view your profile",
@@ -49,30 +40,6 @@ const ProfilePage: React.FC = () => {
       return;
     }
     setAuthChecked(true);
-<<<<<<< HEAD
-  }, [navigate, toast]);
-
-  useEffect(() => {
-    if (!authChecked) return;
-
-    async function loadProfile() {
-      const userId = getCurrentUserId();
-      if (!userId) {
-        navigate("/signin");
-        return;
-      }
-      try {
-        setLoading(true);
-        const profileData = await api.get<Profile>(`/profiles/${userId}`);
-        const optionalRes = await api.get<unknown>(`/profiles/${userId}/optional`);
-        const optionalData = Array.isArray(optionalRes) ? {} : (optionalRes as object) || {};
-        const preferencesData = await api.get<{ preference: string }[]>(`/profiles/${userId}/preferences`);
-        setProfile(profileData);
-        setOptionalData(optionalData);
-        setPreferences(preferencesData?.map((p) => p.preference) || []);
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-=======
   }, [navigate, toast, hasSession]);
 
   useEffect(() => {
@@ -103,7 +70,6 @@ const ProfilePage: React.FC = () => {
         setOptionalData({});
         setPreferences([]);
       } catch {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
         toast({
           title: "Error loading profile",
           description: "Please try again later",
@@ -114,28 +80,12 @@ const ProfilePage: React.FC = () => {
       }
     }
 
-<<<<<<< HEAD
-    loadProfile();
-=======
     getProfile();
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   }, [authChecked, navigate, toast]);
 
   useEffect(() => {
     async function fetchEvents() {
       if (!authChecked) return;
-<<<<<<< HEAD
-      
-      try {
-        setEventsLoading(true);
-        const eventsData = await api.get<Event[]>("/events") || [];
-        
-        // Sort events based on user preferences
-        const sortedEvents = sortEventsByPreference(eventsData, preferences);
-        setEvents(sortedEvents);
-      } catch (error) {
-        console.error("Error fetching events:", error);
-=======
       try {
         setEventsLoading(true);
         const res = await apiFetch<Array<Record<string, unknown>>>("/events");
@@ -144,7 +94,6 @@ const ProfilePage: React.FC = () => {
           setEvents(sortedEvents);
         }
       } catch {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
         toast({
           title: "Error loading events",
           description: "Unable to load recommended events",
@@ -155,17 +104,10 @@ const ProfilePage: React.FC = () => {
       }
     }
 
-<<<<<<< HEAD
-    if (preferences.length > 0 || !loading) {
-      fetchEvents();
-    }
-  }, [preferences, loading, authChecked, toast]);
-=======
     if (!loading) {
       fetchEvents();
     }
   }, [loading, authChecked, toast]);
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 
   const getCategoryColor = (category: string) => {
     switch (category?.toLowerCase()) {

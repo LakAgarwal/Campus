@@ -21,25 +21,15 @@ import EventsPage from './pages/EventsPage';
 import ProjectsPage from './pages/ProjectsPage';
 import ResourcesPage from './pages/ResourcesPage';
 import CreateTemporaryOpening from './pages/CreateTemporaryOpening';
-<<<<<<< HEAD
 import EventAttendees from "./pages/EventAttendees";
-
 import VerifyAttendeesPage from "./pages/verify-attendees/VerifyAttendeesPage";
 import LostAndFound from "./pages/LostAndFound";
-import { useEffect, useState } from "react";
-import { getAuthToken, clearAuthToken } from "@/api/client";
-import { HomepageProvider } from '@/contexts/HomepageContext';
-import RecentOpeningsPage from "./pages/RecentOpeningsPage";
-import Project from "./pages/Project";
-import DashboardLayout from "@/components/dashboard/DashboardLayout";
-import { useConnectionListener } from './hooks/useConnectionListeners';
-import { useEventRegistrationListener } from './hooks/useEventRegistrationListener';
-=======
 import { HomepageProvider } from '@/contexts/HomepageContext';
 import { AuthProvider, useAuthContext } from '@/contexts/AuthContext';
 import RecentOpeningsPage from "./pages/RecentOpeningsPage";
 import Project from "./pages/Project";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
+import { useConnectionListener } from './hooks/useConnectionListeners';
+import { useEventRegistrationListener } from './hooks/useEventRegistrationListener';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -51,32 +41,18 @@ const queryClient = new QueryClient({
   },
 });
 
-<<<<<<< HEAD
-const ProtectedClubRoute = ({ children }) => {
+const ProtectedClubRoute = ({ children }: { children: React.ReactNode }) => {
   const clubLoggedIn = sessionStorage.getItem('club_logged_in') === 'true';
-
-  return clubLoggedIn ? children : <Navigate to="/club/login" />;
+  return clubLoggedIn ? <>{children}</> : <Navigate to="/club/login" />;
 };
 
-const ProtectedAdminRoute = ({ children }) => {
+const ProtectedAdminRoute = ({ children }: { children: React.ReactNode }) => {
   const adminLogin = sessionStorage.getItem('admin_logged_in') === 'true';
-
-  return adminLogin ? children : <Navigate to="/signin" />;
+  return adminLogin ? <>{children}</> : <Navigate to="/signin" />;
 };
 
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const token = getAuthToken();
-    setAuthenticated(!!token);
-    setLoading(false);
-  }, []);
-=======
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { hasSession, loading } = useAuthContext();
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 
   if (loading) {
     return (
@@ -86,11 +62,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
-<<<<<<< HEAD
-  if (!authenticated) {
-=======
   if (!hasSession()) {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
     return <Navigate to="/signin" replace />;
   }
 
@@ -98,17 +70,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 };
 
 const AuthenticatedRoute = ({ children }: { children: React.ReactNode }) => {
-<<<<<<< HEAD
-  const [loading, setLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    setIsAuthenticated(!!getAuthToken());
-    setLoading(false);
-  }, []);
-=======
   const { hasSession, loading } = useAuthContext();
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 
   if (loading) {
     return (
@@ -118,23 +80,14 @@ const AuthenticatedRoute = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
-<<<<<<< HEAD
-  return isAuthenticated ? <Navigate to="/homepage" replace /> : <>{children}</>;
+  return hasSession() ? <Navigate to="/homepage" replace /> : <>{children}</>;
 };
 
 function App() {
   useConnectionListener();
   useEventRegistrationListener();
   return (
-    
-=======
-  return hasSession() ? <Navigate to="/homepage" replace /> : children;
-};
-
-function App() {
-  return (
     <AuthProvider>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
     <HomepageProvider>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
@@ -150,22 +103,15 @@ function App() {
               />
               <Route path="/signin" element={<SignIn />} />
               <Route path="/signup" element={<SignUp />} />
-<<<<<<< HEAD
               <Route path="/homepage" element={
                 <ProtectedRoute>
                   <Homepage />
-                  </ProtectedRoute>} />
-              <Route path="/event/:eventId" element={<EventDetailsPage />} />
-              <Route path="/profile/:username" element={
-                  <PublicProfilePage />
-=======
-              <Route path="/homepage" element={<Homepage />} />
+                </ProtectedRoute>} />
               <Route path="/event/:eventId" element={<EventDetailsPage />} />
               <Route path="/profile/:username" element={
                 <ProtectedRoute>
                   <PublicProfilePage />
                 </ProtectedRoute>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
               } />
               <Route
                 path="/people"
@@ -183,16 +129,14 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-<<<<<<< HEAD
-              
               <Route
                 path="/lost-and-found"
                 element={
-                  <LostAndFound />
+                  <ProtectedRoute>
+                    <LostAndFound />
+                  </ProtectedRoute>
                 }
               />
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
               <Route
                 path="/club/create"
                 element={
@@ -212,43 +156,25 @@ function App() {
               <Route
                 path="/club/dashboard"
                 element={
-<<<<<<< HEAD
                   <ProtectedClubRoute>
                     <ClubDashboardPage />
                   </ProtectedClubRoute>
-=======
-                  
-                    <ClubDashboardPage />
-                  
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                 }
               />
               <Route
                 path="/club/create-event"
                 element={
-<<<<<<< HEAD
                   <ProtectedClubRoute>
                     <CreateEventPage />
                   </ProtectedClubRoute>
-=======
-                 
-                    <CreateEventPage />
-                 
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                 }
               />
               <Route
                 path="/club/event/:eventId/preview"
                 element={
-<<<<<<< HEAD
                   <ProtectedClubRoute>
                     <EventPreviewPage />
                   </ProtectedClubRoute>
-=======
-                  <ProtectedRoute>
-                    <EventPreviewPage />
-                  </ProtectedRoute>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                 }
               />
               <Route path="/events-registered" element={
@@ -271,14 +197,11 @@ function App() {
                   <CreateTemporaryOpening />
                 </ProtectedRoute>
               } />
-<<<<<<< HEAD
               <Route path="/club/event-attendees/:event_id" element={
-              <ProtectedClubRoute>
-                <EventAttendees />
-              </ProtectedClubRoute>
-                } />
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
+                <ProtectedClubRoute>
+                  <EventAttendees />
+                </ProtectedClubRoute>
+              } />
               <Route path="/openings" element={
                 <ProtectedRoute>
                   <RecentOpeningsPage />
@@ -288,8 +211,6 @@ function App() {
                   <ProtectedRoute>
                     <Project />
                   </ProtectedRoute>} />
-<<<<<<< HEAD
-                
               <Route
                 path="/verify-attendees"
                 element={
@@ -298,8 +219,6 @@ function App() {
                   </ProtectedClubRoute>
                 }
               />
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
               <Route path="*" element={<NotFound />} />
             </Routes>
           </TooltipProvider>
@@ -308,10 +227,7 @@ function App() {
         </BrowserRouter>
       </QueryClientProvider>
     </HomepageProvider>
-<<<<<<< HEAD
-=======
     </AuthProvider>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   );
 }
 

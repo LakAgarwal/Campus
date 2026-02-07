@@ -1,23 +1,15 @@
-<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Book, FileText, Video, Link as LinkIcon, ArrowLeft, Plus } from "lucide-react";
-=======
-import React from 'react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search, Book, FileText, Video, Link as LinkIcon } from "lucide-react";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
-<<<<<<< HEAD
 import { api } from "@/api/client";
-import { clearAuthToken } from "@/api/client";
+import { useAuthContext } from "@/contexts/AuthContext";
 import Sidebar from "@/components/homepage/Sidebar";
 import PostResourceDialog from "@/components/resources/PostResourceDialog";
 import { cn } from "@/lib/utils";
@@ -102,8 +94,9 @@ const ResourcesPage = () => {
     }
   };
 
+  const { signOut } = useAuthContext();
   const handleLogout = () => {
-    clearAuthToken();
+    signOut();
     navigate('/signin');
   };
 
@@ -290,90 +283,6 @@ const ResourcesPage = () => {
         onClose={() => setIsPostDialogOpen(false)}
         onSuccess={handlePostSuccess}
       />
-=======
-
-const ResourcesPage = () => {
-  const { user } = useAuth();
-
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase();
-  };
-
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-      <div className="container max-w-7xl mx-auto px-4">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-bold dark:text-white">Resources</h1>
-              <p className="text-gray-600 dark:text-gray-400 mt-1">
-                Access learning materials and study resources
-              </p>
-            </div>
-
-            <div className="relative w-full md:w-96">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search resources..."
-                className="pl-10 dark:bg-gray-800 dark:border-gray-700"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Resources Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Sample Resource Card */}
-          <Card className="overflow-hidden hover:shadow-lg transition-all duration-300">
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
-                <div className="p-2 bg-primary/10 rounded-lg">
-                  <Book className="h-6 w-6 text-primary" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-lg dark:text-white">Data Structures Guide</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Study Material</p>
-                </div>
-              </div>
-
-              <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">
-                Comprehensive guide covering all essential data structures and algorithms.
-              </p>
-
-              <div className="mt-4 flex flex-wrap gap-2">
-                <Badge variant="secondary">Computer Science</Badge>
-                <Badge variant="secondary">Algorithms</Badge>
-                <Badge variant="secondary">PDF</Badge>
-              </div>
-
-              <div className="mt-4 flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
-                <div className="flex items-center gap-2">
-                  <FileText className="h-4 w-4" />
-                  <span>PDF Document</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span>2.5 MB</span>
-                </div>
-              </div>
-
-              <div className="mt-4 flex gap-2">
-                <Button className="flex-1">Download</Button>
-                <Button variant="outline" size="icon">
-                  <LinkIcon className="h-4 w-4" />
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Add more resource cards here */}
-        </div>
-      </div>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
     </div>
   );
 };

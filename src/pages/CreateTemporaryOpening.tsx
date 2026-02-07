@@ -12,11 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Plus, Trash2, Upload, Link as LinkIcon, Users, ArrowLeft } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-<<<<<<< HEAD
 import { api } from '@/api/client';
-=======
-import { getStoredUserId } from '@/lib/api';
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import { useAuth } from '@/hooks/useAuth';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -94,7 +90,6 @@ const CreateTemporaryOpening: React.FC = () => {
     }
   });
 
-<<<<<<< HEAD
   const onSubmit = async (data: FormValues) => {
     try {
       setLoading(true);
@@ -141,26 +136,6 @@ const CreateTemporaryOpening: React.FC = () => {
       navigate(`/homepage`);
     } catch (error) {
       console.error('Error creating opening:', error);
-=======
-  const userId = getStoredUserId();
-  const onSubmit = async (_data: FormValues) => {
-    try {
-      setLoading(true);
-      if (!userId) {
-        toast({
-          variant: "destructive",
-          title: "Not signed in",
-          description: "Please sign in to create an opening.",
-        });
-        return;
-      }
-      toast({
-        title: "Coming soon",
-        description: "Creating openings will be available when the backend supports it.",
-      });
-      navigate("/openings");
-    } catch {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       toast({
         title: "Error",
         description: "Failed to create temporary opening",

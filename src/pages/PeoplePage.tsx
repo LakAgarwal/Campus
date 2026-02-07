@@ -5,12 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, ArrowLeft } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-<<<<<<< HEAD
-import { api } from '@/api/client';
-=======
 import { apiFetch } from '@/lib/api';
 import { getStoredUserId } from '@/lib/api';
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import { useAuth } from '@/hooks/useAuth';
 import UserCard from '@/components/users/UserCard';
 import { useConnections } from "@/hooks/useConnections";
@@ -54,12 +50,8 @@ const PeoplePage: React.FC = () => {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-<<<<<<< HEAD
-      if (!user?.id) {
-=======
       const userId = getStoredUserId();
       if (!userId || !user?.id) {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
         toast({
           title: "Authentication required",
           description: "Please sign in to view users",
@@ -69,41 +61,13 @@ const PeoplePage: React.FC = () => {
         return;
       }
 
-<<<<<<< HEAD
-      const allProfiles = await api.get<UserProfile[]>('/profiles') || [];
-      const profilesData = allProfiles.filter((p: UserProfile) => p.id !== user.id && !(p as UserProfile & { is_deleted?: boolean }).is_deleted);
-
-      if (!profilesData.length) {
-=======
       const res = await apiFetch<UserProfile[]>("/profiles");
       if (res.error || !res.data || !Array.isArray(res.data)) {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
         setUsers([]);
         setFilteredUsers([]);
         return;
       }
 
-<<<<<<< HEAD
-      const enrichedProfiles = await Promise.all(profilesData.map(async (profile: UserProfile) => {
-        const optionalRes = await api.get<unknown>(`/profiles/${profile.id}/optional`);
-        const optional = Array.isArray(optionalRes) ? undefined : (optionalRes as UserProfile['optional']);
-        const preferencesRes = await api.get<{ preference: string }[]>(`/profiles/${profile.id}/preferences`);
-        const preferences = preferencesRes;
-        return {
-          ...profile,
-          optional: optional ? {
-            ...optional,
-            skills: optional?.skills || '',
-            bio: optional?.bio || '',
-            contact_info: optional?.contact_info || '',
-            projects: optional?.projects || '',
-            social_media_links: optional?.social_media_links || '',
-            volunteering_exp: optional?.volunteering_exp || '',
-            profile_picture_url: optional?.profile_picture_url || ''
-          },
-          preferences: (preferences || []).reduce((acc: Record<string, boolean>, p) => ({ ...acc, [p.preference]: true }), {})
-        };
-=======
       const allProfiles = res.data as Array<Record<string, unknown>>;
       const profilesData = allProfiles.filter((p) => (p.id ?? p.profile_id) !== user.id);
 
@@ -115,17 +79,11 @@ const PeoplePage: React.FC = () => {
         branch: (profile.branch as string) ?? "",
         optional: {},
         preferences: {},
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       }));
 
       setUsers(enrichedProfiles);
       setFilteredUsers(enrichedProfiles);
-<<<<<<< HEAD
-    } catch (error) {
-      console.error('Error fetching users:', error);
-=======
     } catch {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       toast({
         title: "Error",
         description: "Failed to fetch users",

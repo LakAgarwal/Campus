@@ -5,10 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Loader2, MessageSquare } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-<<<<<<< HEAD
-import { api } from '@/api/client';
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import { useAuth } from '@/hooks/useAuth';
 
 interface ConnectedUser {
@@ -34,33 +30,7 @@ const ConnectedUsers: React.FC = () => {
         return;
       }
 
-<<<<<<< HEAD
-      const connections = await api.get<{ user1_id: string; user2_id: string; user1Id?: string; user2Id?: string; status: string }[]>('/connections').catch(() => []);
-      const list = Array.isArray(connections) ? connections : [];
-      const accepted = list.filter(c => c.status === 'accepted');
-      const userIds = accepted.map(c => {
-        const u1 = c.user1_id ?? (c as { user1Id?: string }).user1Id;
-        const u2 = c.user2_id ?? (c as { user2Id?: string }).user2Id;
-        return u1 === user.id ? u2 : u1;
-      });
-      if (userIds.length === 0) {
-        setConnectedUsers([]);
-        setLoading(false);
-        return;
-      }
-      const profiles = await Promise.all(userIds.map(id => api.get<ConnectedUser>(`/profiles/${id}`).catch(() => null)));
-      const connectedUsersList = profiles.filter(Boolean) as ConnectedUser[];
-      setConnectedUsers(connectedUsersList.map(p => ({
-        id: p.id,
-        full_name: (p as { full_name?: string }).full_name ?? (p as { fullName?: string }).fullName ?? '',
-        username: (p as { username?: string }).username ?? '',
-        year_of_study: (p as { year_of_study?: number }).year_of_study ?? (p as { yearOfStudy?: number }).yearOfStudy ?? 0,
-        branch: (p as { branch?: string }).branch ?? '',
-        profile_picture_url: (p as { profile_picture_url?: string }).profile_picture_url ?? (p as { profilePictureUrl?: string }).profilePictureUrl
-      })));
-=======
       setConnectedUsers([]);
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
     } catch (error) {
       console.error('Error fetching connected users:', error);
       toast({

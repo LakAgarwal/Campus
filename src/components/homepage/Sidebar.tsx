@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import {
@@ -14,20 +10,14 @@ import {
   LogOut,
   User,
   ChevronLeft,
-<<<<<<< HEAD
   Menu,
-  Search
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
+  Search,
+  Home
 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import MenuItemLink from "./MenuItemLink";
-import { Badge } from "@/components/ui/badge";
-<<<<<<< HEAD
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 
 interface SidebarProps {
   isSidebarExpanded: boolean;
@@ -43,14 +33,10 @@ const Sidebar: React.FC<SidebarProps> = ({
   handleLogout,
 }) => {
   const sidebarRef = useRef<HTMLDivElement>(null);
-<<<<<<< HEAD
-  const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
   
   const userProfile = user?.user_metadata || {};
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -75,11 +61,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   const sidebarVariants = {
     expanded: {
-<<<<<<< HEAD
       width: "256px",
-=======
-      width: "272px",
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       transition: {
         duration: 0.3,
         ease: "easeInOut",
@@ -95,7 +77,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   const navigationItems = [
-<<<<<<< HEAD
+    { icon: Home, label: "Homepage", to: "/homepage", id: "homepage" },
     { icon: Calendar, label: "Events", to: "/events-registered", id: "events-registered" },
     { icon: BookOpen, label: "Resources", to: "/resources", id: "resources" },
     { icon: Heart, label: "Volunteering", to: "/volunteering", id: "volunteering" },
@@ -103,32 +85,18 @@ const Sidebar: React.FC<SidebarProps> = ({
     { icon: FileText, label: "Personal Space", to: "/personal-space", id: "personal-space" },
     { icon: Search, label: "Lost & Found", to: "/lost-and-found", id: "lost-and-found" },
   ];
-=======
-    { icon: Calendar, label: "Events Registered", to: "/events-registered" },
-    { icon: BookOpen, label: "Resources", to: "/resources" },
-    { icon: Heart, label: "Volunteering", to: "/volunteering" },
-    { icon: Users, label: "Collaborations", to: "/collaborations" },
-    { icon: FileText, label: "Personal Space", to: "/personal-space" },
-  ];
-  
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 
   const footerItems = [
     { 
       icon: MessageSquare, 
       label: "Contact Admin", 
-<<<<<<< HEAD
       to: "/contact-admin",
       id: "contact-admin"
-=======
-      to: "/contact-admin"
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
     },
     { 
       icon: LogOut, 
       label: "Sign Out", 
       onClick: handleLogout,
-<<<<<<< HEAD
       className: "text-red-500 hover:text-red-600",
       id: "logout"
     },
@@ -136,12 +104,6 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   const isActiveRoute = (itemPath: string) => {
     return location.pathname === itemPath;
-  };
-
-  const handleMobileOutsideClick = () => {
-    if (isMobileView && isSidebarExpanded) {
-      setIsSidebarExpanded(false);
-    }
   };
 
   const toggleSidebar = () => {
@@ -163,7 +125,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       {isMobileView && isSidebarExpanded && (
         <div 
           className="fixed inset-0 bg-black/20 z-20"
-          onClick={handleMobileOutsideClick}
+          onClick={() => setIsSidebarExpanded(false)}
           aria-hidden="true"
         />
       )}
@@ -248,117 +210,6 @@ const Sidebar: React.FC<SidebarProps> = ({
 
           <nav className="flex-grow overflow-y-auto custom-scrollbar">
             <motion.ul className="space-y-1" variants={containerVariants}>
-              <motion.li variants={itemVariants}>
-=======
-      className: "text-red-500 hover:text-red-600"
-    },
-  ];
-
-  return (
-    <motion.aside
-      ref={sidebarRef}
-      initial={false}
-      animate={isSidebarExpanded ? "expanded" : "collapsed"}
-      variants={sidebarVariants}
-      className={`
-        fixed left-0 top-16 z-20 bg-white shadow-lg md:shadow-sm rounded-r-lg md:rounded-lg
-        transition-transform duration-300 ease-in-out h-[calc(100vh-4rem)]
-        ${
-          isMobileView
-            ? isSidebarExpanded
-              ? "translate-x-0"
-              : "-translate-x-full"
-            : "translate-x-0"
-        }
-      `}
-    >
-      <button
-        onClick={() => setIsSidebarExpanded(!isSidebarExpanded)}
-        className={`
-          absolute -right-3 top-4 bg-white rounded-full p-1.5 shadow-md
-          hover:bg-gray-50 transition-colors duration-200
-          ${isMobileView ? "hidden" : "block"}
-        `}
-      >
-        <ChevronLeft
-          className={`h-4 w-4 text-gray-600 transition-transform duration-300 ${
-            !isSidebarExpanded ? "rotate-180" : ""
-          }`}
-        />
-      </button>
-
-      <motion.div
-        className="p-4 h-full flex flex-col"
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
-      >
-        <motion.div
-          variants={itemVariants}
-          className={`flex flex-col items-center gap-3 mb-6 transition-opacity duration-300 ${
-            !isSidebarExpanded && !isMobileView
-              ? "opacity-0"
-              : "opacity-100"
-          }`}
-        >
-          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-2">
-            <User className="h-8 w-8 text-primary" />
-          </div>
-          {(isSidebarExpanded || isMobileView) && (
-            <div className="text-center">
-              <h3 className="font-medium">John Doe</h3>
-              <p className="text-xs text-gray-500">
-                Computer Science, 3rd Year
-              </p>
-              <div className="mt-1 h-1.5 w-32 bg-gray-200 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-primary rounded-full"
-                  style={{ width: "75%" }}
-                ></div>
-              </div>
-            </div>
-          )}
-        </motion.div>
-
-        <nav className="flex-grow overflow-y-auto custom-scrollbar">
-          <motion.ul className="space-y-1" variants={containerVariants}>
-            {navigationItems.map((item, index) => (
-              <motion.li key={index} variants={itemVariants}>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <MenuItemLink
-<<<<<<< HEAD
-                        to="/homepage"
-                        icon={Calendar}
-                        label="Homepage"
-                        showLabel={isSidebarExpanded || isMobileView}
-                        isCenter={!isSidebarExpanded && !isMobileView}
-                        isActive={isActiveRoute("/homepage")}
-                      />
-                    </TooltipTrigger>
-                    {!isSidebarExpanded && !isMobileView && (
-                      <TooltipContent side="right" align="center">
-                        Homepage
-=======
-                        to={item.to}
-                        icon={item.icon}
-                        label={item.label}
-                        showLabel={isSidebarExpanded || isMobileView}
-                        isCenter={!isSidebarExpanded && !isMobileView}
-                      />
-                    </TooltipTrigger>
-                    {!isSidebarExpanded && !isMobileView && (
-                      <TooltipContent side="right">
-                        {item.label}
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
-                      </TooltipContent>
-                    )}
-                  </Tooltip>
-                </TooltipProvider>
-              </motion.li>
-<<<<<<< HEAD
               {navigationItems.map((item, index) => (
                 <motion.li key={index} variants={itemVariants}>
                   <TooltipProvider>
@@ -393,7 +244,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <MenuItemLink
-                          to={item.to}
+                          to={item.to || "#"}
                           onClick={item.onClick}
                           icon={item.icon}
                           label={item.label}
@@ -416,42 +267,6 @@ const Sidebar: React.FC<SidebarProps> = ({
         </motion.div>
       </motion.aside>
     </>
-=======
-            ))}
-          </motion.ul>
-        </nav>
-
-        <div className="mt-auto pt-4 border-t">
-          <motion.ul className="space-y-1" variants={containerVariants}>
-            {footerItems.map((item, index) => (
-              <motion.li key={index} variants={itemVariants}>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <MenuItemLink
-                        to={item.to}
-                        onClick={item.onClick}
-                        icon={item.icon}
-                        label={item.label}
-                        showLabel={isSidebarExpanded || isMobileView}
-                        isCenter={!isSidebarExpanded && !isMobileView}
-                        className={item.className}
-                      />
-                    </TooltipTrigger>
-                    {!isSidebarExpanded && !isMobileView && (
-                      <TooltipContent side="right">
-                        {item.label}
-                      </TooltipContent>
-                    )}
-                  </Tooltip>
-                </TooltipProvider>
-              </motion.li>
-            ))}
-          </motion.ul>
-        </div>
-      </motion.div>
-    </motion.aside>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   );
 };
 

@@ -38,11 +38,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Input } from "@/components/ui/input";
-<<<<<<< HEAD
-import { api } from "@/api/client";
-=======
 import { apiFetch } from "@/lib/api";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import { motion, AnimatePresence } from "framer-motion";
 import { z } from "zod";
 import {
@@ -152,33 +148,6 @@ const ClubDashboard = () => {
     const fetchClubData = async () => {
       try {
         setIsLoading(true);
-<<<<<<< HEAD
-        
-        const eventsData = await api.get<{ eventId?: number; event_id?: number; name?: string; datetime?: string; currentAttendees?: number; current_attendees?: number; maxAttendees?: number; max_attendees?: number; status?: string }[]>(`/events?clubId=${clubId}`).catch(() => []);
-        const eventsList = Array.isArray(eventsData) ? eventsData.filter((e: any) => !e.isDeleted && !e.is_deleted) : [];
-        const formattedEvents = eventsList.slice(0, 5).map((event: any) => ({
-          id: event.eventId ?? event.event_id,
-          title: event.name,
-          date: new Date(event.datetime || '').toLocaleDateString(),
-          registrations: event.currentAttendees ?? event.current_attendees ?? 0,
-          capacity: event.maxAttendees ?? event.max_attendees ?? 0,
-          status: event.status
-        }));
-        const memberCount = 0;
-        const eventsCount = eventsList.length;
-
-        setClub({
-          id: parseInt(clubId),
-          name: clubName,
-          category: clubCategory,
-          memberCount: memberCount || 0,
-          eventsCount: eventsCount || 0
-        });
-
-        setEvents(formattedEvents);
-      } catch (error) {
-        console.error("Error fetching club data:", error);
-=======
         const res = await apiFetch<Array<Record<string, unknown>>>(`/events/club/${clubId}`);
         const eventsData = res.data && Array.isArray(res.data) ? res.data : [];
 
@@ -201,7 +170,6 @@ const ClubDashboard = () => {
 
         setEvents(formattedEvents);
       } catch {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
         toast({
           title: "Error",
           description: "Failed to load club data. Please try again.",
@@ -218,24 +186,12 @@ const ClubDashboard = () => {
   // Add click outside handler
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-<<<<<<< HEAD
-      // Only handle click outside on mobile screens
-      if (window.innerWidth < 1024) {
-        if (
-          sidebarRef.current && 
-          !sidebarRef.current.contains(event.target as Node) && 
-          isMenuOpen
-        ) {
-          setIsMenuOpen(false);
-        }
-=======
       if (
         sidebarRef.current && 
         !sidebarRef.current.contains(event.target as Node) && 
         isMenuOpen
       ) {
         setIsMenuOpen(false);
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       }
     };
 
@@ -248,16 +204,7 @@ const ClubDashboard = () => {
   // Add window resize handler
   useEffect(() => {
     const handleResize = () => {
-<<<<<<< HEAD
-      // Only update menu state on mobile screens
-      if (window.innerWidth < 1024) {
-        setIsMenuOpen(false);
-      } else {
-        setIsMenuOpen(true);
-      }
-=======
       setIsMenuOpen(window.innerWidth >= 1024);
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
     };
 
     window.addEventListener('resize', handleResize);
@@ -284,13 +231,6 @@ const handleCreateEvent = () => {
   navigate('/club/create-event');
 };
 
-<<<<<<< HEAD
-  const handleVerifyAttendees = () => {
-    navigate('/verify-attendees');
-  };
-
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -358,10 +298,6 @@ const handleCreateEvent = () => {
   const handleCancelEvent = async (eventId: number) => {
     try {
       setIsCancelling(true);
-<<<<<<< HEAD
-      await api.patch(`/events/${eventId}`, { status: "Closed", isDeleted: true });
-
-=======
       
       // Get the club ID from session storage
       const clubId = sessionStorage.getItem('club_id');
@@ -370,7 +306,6 @@ const handleCreateEvent = () => {
       }
       
       // Backend may not have event update endpoint yet; remove from local state
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       // Remove the event from the local state
       setEvents(events.filter(event => event.id !== eventId));
 
@@ -397,231 +332,12 @@ const handleCreateEvent = () => {
   };
 
   return (
-<<<<<<< HEAD
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex">
-=======
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex overflow-hidden">
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       {/* Sidebar */}
       <motion.aside
         ref={sidebarRef}
         initial={{ x: -300 }}
         animate={{ x: isMenuOpen ? 0 : -300 }}
-<<<<<<< HEAD
-        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-        className={`fixed inset-y-0 left-0 z-[60] w-72 bg-white shadow-xl flex flex-col transform lg:translate-x-0 lg:fixed ${
-          isMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
-        }`}
-      >
-        {/* Overlay for mobile */}
-        {isMenuOpen && window.innerWidth < 1024 && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/10 z-[55] lg:hidden"
-            onClick={() => setIsMenuOpen(false)}
-          />
-        )}
-
-        <div className="flex flex-col h-full relative z-[65] bg-white">
-          <motion.div 
-            className="p-6 border-b flex flex-col items-center text-center"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.3 }}
-          >
-            <Avatar className="h-20 w-20 mb-3 ring-4 ring-primary/20">
-              <AvatarImage src="" />
-              <AvatarFallback className="bg-gradient-to-br from-primary to-primary/70 text-white text-2xl font-bold">
-                {club?.name?.charAt(0) || "C"}
-              </AvatarFallback>
-            </Avatar>
-            <h2 className="text-xl font-bold text-gray-800 mb-1 truncate max-w-full">
-              {club?.name || "Club Dashboard"}
-            </h2>
-            <Badge className="bg-gradient-to-r from-primary/90 to-primary/70 hover:from-primary hover:to-primary/80 transition-all">
-              {club?.category}
-            </Badge>
-            <div className="flex items-center justify-center space-x-3 mt-4">
-              <div className="text-center">
-                <p className="text-xs text-gray-500">Members</p>
-                <p className="font-bold text-primary">{club?.memberCount}</p>
-              </div>
-              <div className="h-8 w-px bg-gray-200"></div>
-              <div className="text-center">
-                <p className="text-xs text-gray-500">Events</p>
-                <p className="font-bold text-primary">{club?.eventsCount}</p>
-              </div>
-            </div>
-            <Button 
-              variant="outline" 
-              className="w-full mt-4 gap-2 border-primary/20 text-primary"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <User size={16} />
-              <span>Admin Profile</span>
-            </Button>
-          </motion.div>
-            
-          <motion.nav 
-            className="flex-1 overflow-y-auto py-6 px-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-          >
-            <div className="space-y-1">
-              <Button 
-                variant={activeNavItem === "events" ? "default" : "ghost"} 
-                className="w-full justify-start text-sm lg:text-base"
-                onClick={() => {
-                  setActiveNavItem("events");
-                  setIsMenuOpen(false);
-                }}
-              >
-                <Calendar className="mr-2 h-5 w-5" />
-                <span>Events</span>
-              </Button>
-              <Button 
-                variant={activeNavItem === "members" ? "default" : "ghost"} 
-                className="w-full justify-start text-sm lg:text-base"
-                onClick={() => {
-                  setActiveNavItem("members");
-                  setIsMenuOpen(false);
-                }}
-              >
-                <Users className="mr-2 h-5 w-5" />
-                <span>Members</span>
-              </Button>
-              <Button 
-                variant={activeNavItem === "analytics" ? "default" : "ghost"} 
-                className="w-full justify-start text-sm lg:text-base"
-                onClick={() => {
-                  setActiveNavItem("analytics");
-                  setIsMenuOpen(false);
-                }}
-              >
-                <BarChart3 className="mr-2 h-5 w-5" />
-                <span>Analytics</span>
-              </Button>
-              <Button 
-                variant={activeNavItem === "announcements" ? "default" : "ghost"} 
-                className="w-full justify-start text-sm lg:text-base"
-                onClick={() => {
-                  setActiveNavItem("announcements");
-                  setIsMenuOpen(false);
-                }}
-              >
-                <MessageSquare className="mr-2 h-5 w-5" />
-                <span>Announcements</span>
-              </Button>
-              <Button 
-                variant={activeNavItem === "resources" ? "default" : "ghost"} 
-                className="w-full justify-start text-sm lg:text-base"
-                onClick={() => {
-                  setActiveNavItem("resources");
-                  setIsMenuOpen(false);
-                }}
-              >
-                <FileText className="mr-2 h-5 w-5" />
-                <span>Resources</span>
-              </Button>
-              <Button 
-                variant={activeNavItem === "settings" ? "default" : "ghost"} 
-                className="w-full justify-start text-sm lg:text-base"
-                onClick={() => {
-                  setActiveNavItem("settings");
-                  setIsMenuOpen(false);
-                }}
-              >
-                <Settings className="mr-2 h-5 w-5" />
-                <span>Settings</span>
-              </Button>
-            </div>
-            
-            <div className="mt-8">
-              <h3 className="text-sm font-medium text-gray-500 px-3 mb-2">Quick Actions</h3>
-              <div className="grid grid-cols-2 gap-2">
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="flex flex-col h-auto py-3 border-primary/20 text-xs lg:text-sm"
-                  onClick={() => {
-                    handleCreateEvent();
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  <FilePlus className="h-4 w-4 mb-1 text-primary" />
-                  <span>New Event</span>
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="flex flex-col h-auto py-3 border-primary/20 text-xs lg:text-sm"
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  <UserPlus className="h-4 w-4 mb-1 text-primary" />
-                  <span>Add Member</span>
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="flex flex-col h-auto py-3 border-primary/20 text-xs lg:text-sm"
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  <MessageSquare className="h-4 w-4 mb-1 text-primary" />
-                  <span>Announce</span>
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  className="flex flex-col h-auto py-3 border-primary/20 text-xs lg:text-sm"
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  <BookOpen className="h-4 w-4 mb-1 text-primary" />
-                  <span>Tutorials</span>
-                </Button>
-              </div>
-            </div>
-          </motion.nav>
-            
-          <motion.div 
-            className="p-4 border-t"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.5 }}
-          >
-            <Button 
-              variant="outline" 
-              className="w-full justify-start text-red-500 hover:text-red-700 hover:bg-red-50 text-sm lg:text-base" 
-              onClick={() => {
-                handleLogout();
-                setIsMenuOpen(false);
-              }}
-            >
-              <LogOut className="mr-2 h-5 w-5" />
-              <span>Logout</span>
-            </Button>
-          </motion.div>
-        </div>
-      </motion.aside>
-      
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col min-h-screen lg:ml-72">
-        {/* Header */}
-        <motion.header 
-          className="bg-white shadow-sm sticky top-0 z-50"
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.3 }}
-=======
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
         className={`bg-white shadow-xl fixed inset-y-0 z-30 w-72 lg:translate-x-0 flex flex-col`}
       >
@@ -786,7 +502,6 @@ const handleCreateEvent = () => {
           initial={{ y: -50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
         >
           <div className="flex items-center justify-between h-16 px-4 md:px-6">
             <div className="flex items-center">
@@ -850,28 +565,11 @@ const handleCreateEvent = () => {
           variants={containerVariants}
         >
           <motion.div 
-<<<<<<< HEAD
-            className="mb-6 flex items-center justify-between"
-            variants={itemVariants}
-          >
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Welcome to {club?.name} Dashboard</h1>
-              <p className="text-gray-500">Manage your club events, members, and resources in one place.</p>
-            </div>
-            <Button 
-              onClick={handleVerifyAttendees}
-              className="flex items-center gap-2"
-            >
-              <Users className="h-4 w-4" />
-              Verify Attendees
-            </Button>
-=======
             className="mb-6"
             variants={itemVariants}
           >
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Welcome to {club?.name} Dashboard</h1>
             <p className="text-gray-500">Manage your club events, members, and resources in one place.</p>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
           </motion.div>
           
           {/* Quick Stats */}
@@ -1298,21 +996,11 @@ const handleCreateEvent = () => {
                                     <Eye className="h-3.5 w-3.5 mr-1" />
                                     Preview
                                   </Button>
-<<<<<<< HEAD
-                                  <Button variant="outline" size="sm" className="bg-white"
-                                  >
-                                    <Calendar className="h-3.5 w-3.5 mr-1" />
-                                    Edit
-                                  </Button>
-                                  <Button variant="outline" size="sm" className="bg-white"
-                                  onClick={() => navigate(`/club/event-attendees/${event.id}`)}>
-=======
                                   <Button variant="outline" size="sm" className="bg-white">
                                     <Calendar className="h-3.5 w-3.5 mr-1" />
                                     Edit
                                   </Button>
                                   <Button variant="outline" size="sm" className="bg-white">
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
                                     <Users className="h-3.5 w-3.5 mr-1" />
                                     Attendees
                                   </Button>

@@ -33,7 +33,7 @@ public class ClubController {
     public ResponseEntity<ClubEntity> getById(@PathVariable Integer id) {
         return clubRepository.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.<ClubEntity>notFound().build());
     }
 
     @PostMapping

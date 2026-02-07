@@ -1,33 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ProjectDetails from "@/components/ProjectDetails";
-<<<<<<< HEAD
 import { api, getCurrentUserId } from "@/api/client";
 import { ProjectData } from "@/types/project";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-=======
-import { apiFetch } from "@/lib/api";
-import { ProjectData } from "@/types/project";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 
 const Project = () => {
   const { opening_id } = useParams<{ opening_id: string }>();
   const navigate = useNavigate();
-<<<<<<< HEAD
   const { toast } = useToast();
   const [projectData, setProjectData] = useState<ProjectData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [joinStatus, setJoinStatus] = useState<'Owner' | 'Already Joined' | 'Active' | null>(null);
-=======
-  const [projectData, setProjectData] = useState<ProjectData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 
   useEffect(() => {
     const fetchProjectData = async () => {
@@ -35,10 +22,8 @@ const Project = () => {
         if (!opening_id) {
           throw new Error("Project ID is required");
         }
-<<<<<<< HEAD
 
         setLoading(true);
-        console.log("Fetching opening with ID:", opening_id);
 
         const userId = getCurrentUserId();
         if (!userId) throw new Error("User not authenticated");
@@ -92,48 +77,10 @@ const Project = () => {
           participantStatus: resolvedJoinStatus === 'Already Joined' ? 'Accepted' : null
         };
 
-        console.log("Formatted project data:", formattedProjectData);
-        setProjectData(formattedProjectData);
-      } catch (err: any) {
-        console.error("Error fetching project data:", err);
-        setError(err.message || "Failed to load project data.");
-=======
-        setLoading(true);
-        const res = await apiFetch<Record<string, unknown>>(`/openings/${opening_id}`);
-        if (res.error || !res.data) {
-          throw new Error(res.error || "Project not found");
-        }
-        const o = res.data as Record<string, unknown>;
-        const creator = o.creator as Record<string, unknown> | undefined;
-        const formattedProjectData: ProjectData = {
-          opening: {
-            opening_id: (o.opening_id ?? o.openingId) as number,
-            created_by: (o.created_by ?? o.createdBy) as string,
-            title: (o.title ?? "") as string,
-            short_description: (o.short_description ?? o.shortDescription ?? "") as string,
-            category: (o.category ?? "") as string,
-            long_description: (o.long_description ?? o.longDescription ?? "") as string,
-            eligibility: (o.eligibility ?? "") as string,
-            contact: (o.contact ?? "") as string,
-            creator: creator ? {
-              id: (creator.id ?? "") as string,
-              full_name: (creator.full_name ?? creator.fullName ?? "") as string,
-              username: (creator.username ?? "") as string,
-              branch: (creator.branch ?? "") as string,
-              year_of_study: (creator.year_of_study ?? creator.yearOfStudy ?? 0) as number,
-              profile_optional: creator.profile_optional as unknown
-            } : undefined
-          },
-          records: o.records as ProjectData["records"],
-          optionalDetails: o.optionalDetails as ProjectData["optionalDetails"],
-          media: o.media as ProjectData["media"],
-          links: o.links as ProjectData["links"],
-          participantStatus: null
-        };
         setProjectData(formattedProjectData);
       } catch (err: unknown) {
+        console.error("Error fetching project data:", err);
         setError(err instanceof Error ? err.message : "Failed to load project data.");
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       } finally {
         setLoading(false);
       }
@@ -142,7 +89,6 @@ const Project = () => {
     fetchProjectData();
   }, [opening_id]);
 
-<<<<<<< HEAD
   const handleJoinProject = async () => {
     try {
       const userId = getCurrentUserId();
@@ -150,24 +96,21 @@ const Project = () => {
 
       await api.post('/openings/' + opening_id + '/join', {});
 
-
       setJoinStatus('Already Joined');
       toast({
         title: "Successfully joined project",
         description: "You have joined this project successfully.",
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error joining project:", error);
       toast({
         title: "Error",
-        description: error.message || "Failed to join project. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to join project. Please try again.",
         variant: "destructive",
       });
     }
   };
 
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -212,21 +155,12 @@ const Project = () => {
   }
 
   return (
-<<<<<<< HEAD
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <ProjectDetails 
         projectData={projectData} 
         joinStatus={joinStatus}
         onJoin={handleJoinProject}
       />
-=======
-    <div className="container mx-auto py-6 px-4">
-      <Button variant="outline" onClick={() => navigate(-1)} className="mb-6 gap-2">
-        <ArrowLeft className="h-4 w-4" />
-        Go back
-      </Button>
-      <ProjectDetails projectData={projectData} />
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
     </div>
   );
 };

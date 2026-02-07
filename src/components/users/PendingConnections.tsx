@@ -15,24 +15,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-<<<<<<< HEAD
-import { api } from '@/api/client';
-import { useAuth } from '@/hooks/useAuth';
-
-interface Connection {
-  connection_id?: number;
-  connectionId?: number;
-  user1_id?: string;
-  user2_id?: string;
-  user1Id?: string;
-  user2Id?: string;
-=======
 import { useAuth } from '@/hooks/useAuth';
 
 interface Connection {
   user1_id: string;
   user2_id: string;
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   status: string;
 }
 
@@ -71,42 +58,7 @@ const PendingConnections: React.FC = () => {
         return;
       }
 
-<<<<<<< HEAD
-      const connections = await api.get<Connection[]>('/connections').catch(() => []);
-      const list = Array.isArray(connections) ? connections : [];
-      const pending = list.filter(c => c.status === 'pending');
-      if (pending.length === 0) {
-        setPendingUsers([]);
-        setLoading(false);
-        return;
-      }
-      const userIds = pending.map(conn => {
-        const u1 = (conn as { user1_id?: string; user1Id?: string }).user1_id ?? (conn as { user1Id?: string }).user1Id;
-        const u2 = (conn as { user2_id?: string; user2Id?: string }).user2_id ?? (conn as { user2Id?: string }).user2Id;
-        return u1 === user.id ? u2 : u1;
-      });
-      const profiles = await Promise.all(userIds.map(id => api.get<Profile>(`/profiles/${id}`).catch(() => null)));
-      const connList = pending as (Connection & { connection_id?: number; connectionId?: number })[];
-      const pendingUsersList = profiles.filter(Boolean).map((profile, i) => {
-        const conn = connList.find(c => {
-          const u1 = (c as { user1_id?: string }).user1_id ?? (c as { user1Id?: string }).user1Id;
-          const u2 = (c as { user2_id?: string }).user2_id ?? (c as { user2Id?: string }).user2Id;
-          return u1 === (profile as Profile).id || u2 === (profile as Profile).id;
-        });
-        return {
-          id: (profile as Profile).id,
-          full_name: (profile as Profile).full_name,
-          username: (profile as Profile).username,
-          year_of_study: (profile as Profile).year_of_study,
-          branch: (profile as Profile).branch,
-          profile_picture_url: (profile as Profile).profile_picture_url,
-          isSentRequest: conn ? ((conn as { user1_id?: string }).user1_id ?? (conn as { user1Id?: string }).user1Id) === user.id : false
-        };
-      });
-      setPendingUsers(pendingUsersList);
-=======
       setPendingUsers([]);
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
     } catch (error) {
       console.error('Error fetching pending connections:', error);
       toast({
@@ -125,16 +77,6 @@ const PendingConnections: React.FC = () => {
 
   const handleAccept = async (userId: string) => {
     try {
-<<<<<<< HEAD
-      const connections = await api.get<{ connection_id?: number; connectionId?: number; user1_id?: string; user2_id?: string; status: string }[]>('/connections').catch(() => []);
-      const conn = Array.isArray(connections) ? connections.find(c => c.status === 'pending' && (c.user1_id === userId && c.user2_id === user?.id || c.user2_id === userId && c.user1_id === user?.id)) : null;
-      const connectionId = conn?.connection_id ?? conn?.connectionId;
-      if (connectionId == null) throw new Error('Connection not found');
-      await api.patch(`/connections/${connectionId}`, { status: 'accepted' });
-
-      // Remove user from pending list
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       setPendingUsers(prev => prev.filter(u => u.id !== userId));
 
       toast({
@@ -153,16 +95,6 @@ const PendingConnections: React.FC = () => {
 
   const handleReject = async (userId: string) => {
     try {
-<<<<<<< HEAD
-      const connections = await api.get<{ connection_id?: number; connectionId?: number; user1_id?: string; user2_id?: string; status: string }[]>('/connections').catch(() => []);
-      const conn = Array.isArray(connections) ? connections.find(c => c.status === 'pending' && (c.user1_id === userId && c.user2_id === user?.id || c.user2_id === userId && c.user1_id === user?.id)) : null;
-      const connectionId = conn?.connection_id ?? conn?.connectionId;
-      if (connectionId == null) throw new Error('Connection not found');
-      await api.delete(`/connections/${connectionId}`);
-
-      // Remove user from pending list
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       setPendingUsers(prev => prev.filter(u => u.id !== userId));
 
       toast({

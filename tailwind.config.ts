@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import type { Config } from "tailwindcss";
 
 export default {
@@ -16,18 +12,13 @@ export default {
   theme: {
     container: {
       center: true,
-<<<<<<< HEAD
       padding: "2rem",
-=======
-      padding: "1rem",
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       screens: {
         "2xl": "1400px",
       },
     },
     extend: {
       colors: {
-<<<<<<< HEAD
         volunteer: {
           border: 'hsl(var(--volunteer-border))',
           input: 'hsl(var(--volunteer-input))',
@@ -84,8 +75,6 @@ export default {
             'text-light': '#6B7280',
           },
         },
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -119,7 +108,6 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-<<<<<<< HEAD
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -194,17 +182,9 @@ export default {
       },
       keyframes: {
         'pulse-subtle': {
-      '0%, 100%': { opacity: '1' },
-      '50%': { opacity: '0.8' },
-    },
-=======
-      },
-      fontFamily: {
-        sans: ["Inter", "sans-serif"],
-        heading: ["Montserrat", "sans-serif"],
-      },
-      keyframes: {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.8' },
+        },
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
@@ -213,7 +193,6 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-<<<<<<< HEAD
         "fade-in": {
           "0%": { opacity: "0", transform: "translateY(10px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
@@ -292,17 +271,10 @@ export default {
           "0%, 100%": { transform: "scale(1)" },
           "50%": { transform: "scale(1.05)" }
         },
-=======
-        fadeIn: {
-          "0%": { opacity: "0", transform: "translateY(10px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-<<<<<<< HEAD
         "fade-in": "fade-in 0.5s ease-out forwards",
         "timeline-dot-pulse": "timeline-dot-pulse 2s infinite",
         "border-beam": "border-beam 3s linear infinite",
@@ -331,15 +303,8 @@ export default {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'gradient-shimmer': 'linear-gradient(to right, transparent 0%, rgba(255,255,255,0.1) 20%, transparent 40%)',
-=======
-        fadeIn: "fadeIn 0.5s ease-out forwards",
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
-<<<<<<< HEAD
 } satisfies Config;
-=======
-} satisfies Config;
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325

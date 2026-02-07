@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-import { api } from "@/api/client";
-import { useToast } from "@/components/ui/use-toast";
-
-export const EVENT_STATUS = ["Open", "Closing Soon", "Waitlist", "Closed", "Cancelled"] as const;
-export const EVENT_TAGS = [
-  "Technical", "Cultural", "Music", "Dance", "Arts", "Finance", "Coding",
-  "Web Development", "Sports", "Entrepreneurship", "Environment", "Health & Wellness", "Gaming", "Literature",
-=======
 import { apiFetch } from "@/lib/api";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -29,7 +20,6 @@ export const EVENT_TAGS = [
   "Health & Wellness",
   "Gaming",
   "Literature",
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 ] as const;
 
 export interface EventFormValues {
@@ -48,31 +38,6 @@ export interface EventFormValues {
 export const createEvent = async (data: EventFormValues, clubId: number) => {
   const { toast } = useToast();
   try {
-<<<<<<< HEAD
-    const eventData = await api.post<{ event_id: number }>('/events', {
-      club_id: clubId,
-      name: data.name,
-      datetime: data.datetime.toISOString(),
-      location: data.location,
-      short_description: data.short_description,
-      eligibility: data.eligibility,
-      registration_deadline: data.registration_deadline.toISOString(),
-      status: data.status,
-      max_attendees: data.max_attendees,
-      event_thumbnail: data.event_thumbnail,
-      current_attendees: 0,
-      is_deleted: false,
-    });
-    await api.post('/events/' + eventData.event_id + '/tags', { tag: data.tag }).catch(() => null);
-    toast({ title: "Success", description: "Event created successfully!" });
-    return { success: true, eventData };
-  } catch (error: unknown) {
-    const message = error instanceof Error ? error.message : "Failed to create event";
-    toast({ title: "Error", description: message, variant: "destructive" });
-    return { success: false, error };
-  }
-};
-=======
     const res = await apiFetch<Record<string, unknown>>("/events", {
       method: "POST",
       body: JSON.stringify({
@@ -107,4 +72,3 @@ export const createEvent = async (data: EventFormValues, clubId: number) => {
     return { success: false, error: err };
   }
 }; 
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325

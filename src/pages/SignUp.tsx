@@ -18,11 +18,7 @@ import {
 } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import { motion } from 'framer-motion';
-<<<<<<< HEAD
-import { authRegister } from "@/api/client";
-=======
 import { useAuthContext } from "@/contexts/AuthContext";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import { useToast } from "@/components/ui/use-toast";
 import { SignUpFormData, bloodGroupOptions, branchOptions, yearOfStudyOptions } from '@/types/profileTypes';
 import { 
@@ -36,10 +32,7 @@ import {
 const SignUp = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-<<<<<<< HEAD
-=======
   const { signUp } = useAuthContext();
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1); // Step 1: Basic info, Step 2: Profile info
   const [hoverButton, setHoverButton] = useState(false);
@@ -114,19 +107,6 @@ const SignUp = () => {
     }
 
     try {
-<<<<<<< HEAD
-      await authRegister({
-        email: formData.email,
-        password: formData.password,
-        fullName: formData.fullName,
-        username: formData.username,
-        rollNumber: formData.rollNumber,
-        yearOfStudy: formData.yearOfStudy,
-        branch: formData.branch,
-        bloodGroup: formData.bloodGroup
-      });
-      
-=======
       const { error } = await signUp({
         email: formData.email,
         password: formData.password,
@@ -147,23 +127,10 @@ const SignUp = () => {
         return;
       }
 
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       toast({
         title: "Account created",
         description: "Your account has been created successfully!",
       });
-<<<<<<< HEAD
-      
-      setTimeout(() => {
-        navigate('/homepage');
-      }, 1000);
-    } catch (error: unknown) {
-      const message = error instanceof Error ? error.message : "An error occurred during sign up.";
-      toast({
-        variant: "destructive",
-        title: "Error creating account",
-        description: message,
-=======
 
       setTimeout(() => {
         navigate('/homepage');
@@ -173,7 +140,6 @@ const SignUp = () => {
         variant: "destructive",
         title: "Error creating account",
         description: "An error occurred during sign up.",
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       });
     } finally {
       setLoading(false);

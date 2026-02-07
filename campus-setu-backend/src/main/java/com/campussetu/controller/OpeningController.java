@@ -31,7 +31,7 @@ public class OpeningController {
     public ResponseEntity<OpeningEntity> getById(@PathVariable Integer id) {
         return openingRepository.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.<OpeningEntity>notFound().build());
     }
 
     @GetMapping("/my")
@@ -60,7 +60,7 @@ public class OpeningController {
 
     @PostMapping
     public ResponseEntity<OpeningEntity> create(@RequestBody OpeningEntity opening, Authentication auth) {
-        if (auth == null) return ResponseEntity.status(401).build();
+        if (auth == null) return ResponseEntity.<OpeningEntity>status(401).build();
         opening.setCreatedBy((String) auth.getPrincipal());
         return ResponseEntity.ok(openingRepository.save(opening));
     }

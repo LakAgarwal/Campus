@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-<<<<<<< HEAD
-import { api } from "@/api/client";
-=======
 import { apiFetch } from "@/lib/api";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import { Profile } from "@/types/profileTypes";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -39,12 +35,6 @@ const PublicProfilePage = () => {
 
   useEffect(() => {
     const fetchProfile = async () => {
-<<<<<<< HEAD
-      try {
-        setLoading(true);
-        
-        const profileData = await api.get<Profile & { profile_id?: number }>('/profiles/username/' + username);
-=======
       if (!username) return;
       try {
         setLoading(true);
@@ -56,25 +46,10 @@ const PublicProfilePage = () => {
         const profileData = (res.data as Array<Profile & Record<string, unknown>>).find(
           (p) => (p.username ?? (p as Record<string, unknown>).username) === username
         );
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
         if (!profileData) {
           setProfile(null);
           return;
         }
-<<<<<<< HEAD
-        const optionalRes = await api.get<PublicProfile['optional']>('/profiles/' + profileData.id + '/optional');
-        const optionalData = Array.isArray(optionalRes) ? undefined : optionalRes;
-        const preferencesData = await api.get<{ preference: string }[]>('/profiles/' + profileData.id + '/preferences') || [];
-        setProfile({
-          ...profileData,
-          is_deleted: false,
-          optional: optionalData || {},
-          preferences: preferencesData.map(p => p.preference)
-        });
-
-      } catch (error) {
-        console.error('Error fetching profile:', error);
-=======
         setProfile({
           ...(profileData as Profile),
           optional: {},
@@ -82,19 +57,12 @@ const PublicProfilePage = () => {
         });
       } catch {
         setProfile(null);
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       } finally {
         setLoading(false);
       }
     };
 
-<<<<<<< HEAD
-    if (username) {
-      fetchProfile();
-    }
-=======
     fetchProfile();
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   }, [username]);
 
   if (loading) {

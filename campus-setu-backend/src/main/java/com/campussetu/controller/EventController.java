@@ -60,7 +60,7 @@ public class EventController {
     public ResponseEntity<EventEntity> getById(@PathVariable Integer id) {
         return eventRepository.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.<EventEntity>notFound().build());
     }
 
     @PatchMapping("/{id}")
@@ -71,12 +71,12 @@ public class EventController {
                     if (body.containsKey("isDeleted")) e.setIsDeleted((Boolean) body.get("isDeleted"));
                     return ResponseEntity.ok(eventRepository.save(e));
                 })
-                .orElse(ResponseEntity.notFound().build());
+                .orElse(ResponseEntity.<EventEntity>notFound().build());
     }
 
     @PostMapping
     public ResponseEntity<EventEntity> create(@RequestBody Map<String, Object> body, Authentication auth) {
-        if (auth == null) return ResponseEntity.status(401).build();
+        if (auth == null) return ResponseEntity.<EventEntity>status(401).build();
         EventEntity e = new EventEntity();
         if (body.get("clubId") != null) e.setClubId(((Number) body.get("clubId")).intValue());
         if (body.get("name") != null) e.setName((String) body.get("name"));

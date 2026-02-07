@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
@@ -205,106 +203,8 @@ const EventsPage: React.FC = () => {
           />
         </div>
       </motion.div>
-=======
-import React from 'react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search, Calendar, MapPin, Clock } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { useAuth } from "@/hooks/useAuth";
-
-const EventsPage = () => {
-  const { user } = useAuth();
-
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase();
-  };
-
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-      <div className="container max-w-7xl mx-auto px-4">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-bold dark:text-white">Events</h1>
-              <p className="text-gray-600 dark:text-gray-400 mt-1">
-                Discover and join exciting events
-              </p>
-            </div>
-
-            <div className="relative w-full md:w-96">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-              <Input
-                placeholder="Search events..."
-                className="pl-10 dark:bg-gray-800 dark:border-gray-700"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Events Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Sample Event Card */}
-          <Card className="overflow-hidden hover:shadow-lg transition-all duration-300">
-            <div className="aspect-video bg-gray-200 dark:bg-gray-800 relative">
-              <div className="absolute top-4 right-4">
-                <Badge variant="secondary" className="bg-white/90 dark:bg-gray-800/90">
-                  Upcoming
-                </Badge>
-              </div>
-            </div>
-            <CardContent className="p-6">
-              <div className="flex items-start gap-4">
-                <Avatar className="h-12 w-12">
-                  <AvatarImage src="/placeholder-avatar.jpg" alt="Organizer" />
-                  <AvatarFallback className="bg-primary/10 text-primary">
-                    {getInitials("John Doe")}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex-1">
-                  <h3 className="font-semibold text-lg dark:text-white">Tech Workshop</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">By John Doe</p>
-                </div>
-              </div>
-              
-              <div className="mt-4 space-y-2">
-                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                  <Calendar className="h-4 w-4" />
-                  <span>Mar 15, 2024</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                  <Clock className="h-4 w-4" />
-                  <span>2:00 PM - 4:00 PM</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
-                  <MapPin className="h-4 w-4" />
-                  <span>Room 101, Building A</span>
-                </div>
-              </div>
-
-              <div className="mt-4">
-                <Button className="w-full">Register Now</Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Add more event cards here */}
-        </div>
-      </div>
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
     </div>
   );
 };
 
-<<<<<<< HEAD
 export default EventsPage;
-=======
-export default EventsPage; 
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325

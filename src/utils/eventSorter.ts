@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import { Profile } from "@/types/profileTypes";
 
 export interface Event {
@@ -19,11 +15,6 @@ export interface Event {
   status: string;
   created_at: string;
   tags?: { tag: string }[];
-<<<<<<< HEAD
-  event_type: string;
-  payment_link?: string;
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 }
 
 /**

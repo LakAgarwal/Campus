@@ -1,11 +1,7 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-<<<<<<< HEAD
-import { clearAuthToken } from "@/api/client";
-=======
 import { useAuthContext } from "@/contexts/AuthContext";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -22,16 +18,10 @@ interface ProfileSidebarProps {
 const ProfileSidebar: React.FC<ProfileSidebarProps> = ({ profile }) => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
-<<<<<<< HEAD
-
-  const handleSignOut = () => {
-    clearAuthToken();
-=======
   const { signOut } = useAuthContext();
 
   const handleSignOut = () => {
     signOut();
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
     navigate("/signin");
   };
 

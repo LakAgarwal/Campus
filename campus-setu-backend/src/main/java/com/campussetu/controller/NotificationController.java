@@ -29,7 +29,7 @@ public class NotificationController {
 
     @PatchMapping("/mark-read")
     public ResponseEntity<Void> markAllRead(Authentication auth) {
-        if (auth == null) return ResponseEntity.status(401).build();
+        if (auth == null) return ResponseEntity.<Void>status(401).build();
         String uid = (String) auth.getPrincipal();
         List<UserNotificationEntity> list = notificationRepository.findByUserIdOrderByCreatedAtDesc(uid);
         for (UserNotificationEntity n : list) {

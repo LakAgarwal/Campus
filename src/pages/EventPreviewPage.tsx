@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-<<<<<<< HEAD
 import { api } from "@/api/client";
-=======
-import { apiFetch } from "@/lib/api";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -52,10 +48,6 @@ import {
   Youtube,
   Trash2,
   Edit2,
-<<<<<<< HEAD
-=======
-  DragHandleDots2Icon,
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 } from "lucide-react";
 
 interface EventData {
@@ -70,11 +62,8 @@ interface EventData {
   max_attendees: number;
   current_attendees: number;
   event_thumbnail: string;
-<<<<<<< HEAD
-  event_type:string;
-  payment_link:string|null;
-=======
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
+  event_type: string;
+  payment_link: string | null;
   event_tags: { tag: string }[];
   agenda: {
     id: string;
@@ -166,13 +155,10 @@ const EventPreviewPage = () => {
     const fetchEventData = async () => {
       try {
         setIsLoading(true);
-<<<<<<< HEAD
-        
+
         const eventData = await api.get<Record<string, unknown>>('/events/' + eventId);
         if (!eventData) throw new Error('Event not found');
 
-        // Initialize optional fields with empty arrays if they don't exist
-        console.log("Fetched Event Data:", eventData); // Log the fetched event data
         const formattedEventData = {
           ...eventData,
           event_tags: eventData.event_tags || [],
@@ -191,29 +177,6 @@ const EventPreviewPage = () => {
         setEventData(formattedEventData);
       } catch (error) {
         console.error("Error fetching event data:", error);
-=======
-        const res = await apiFetch<Record<string, unknown>>(`/events/${eventId}`);
-        if (res.error || !res.data) {
-          throw new Error(res.error || "Failed to load");
-        }
-        const d = res.data;
-        const formattedEventData = {
-          ...d,
-          event_tags: Array.isArray(d.tags) ? (d.tags as string[]).map((tag: string) => ({ tag })) : [],
-          event_agenda: d.agenda || [],
-          event_speakers: d.speakers || [],
-          event_contacts: d.contacts || [],
-          event_faqs: d.faqs || [],
-          event_links: d.links || [],
-          event_media: d.media || [],
-          event_prizes: d.prizes || [],
-          event_resources: d.resources || [],
-          event_social_links: d.socialLinks || d.social_links || [],
-          event_sponsors: d.sponsors || [],
-        };
-        setEventData(formattedEventData);
-      } catch {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
         toast({
           title: "Error",
           description: "Failed to load event data. Please try again.",
@@ -985,8 +948,4 @@ const EventPreviewPage = () => {
   );
 };
 
-<<<<<<< HEAD
 export default EventPreviewPage;
-=======
-export default EventPreviewPage; 
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325

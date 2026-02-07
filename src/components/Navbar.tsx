@@ -14,48 +14,28 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-<<<<<<< HEAD
-import { getCurrentUserId, authSession } from "@/api/client";
-import { useToast } from "@/components/ui/use-toast";
-=======
 import { useToast } from "@/components/ui/use-toast";
 import { useAuthContext } from "@/contexts/AuthContext";
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-<<<<<<< HEAD
-=======
   const { hasSession } = useAuthContext();
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
   const location = useLocation();
 
   const isAuthPage =
     location.pathname === "/signin" || location.pathname === "/signup";
 
-<<<<<<< HEAD
-  const handleProfileClick = async () => {
-    const { session } = await authSession();
-    if (session?.user) {
-=======
   const handleProfileClick = () => {
     if (hasSession()) {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       navigate("/profile");
     } else {
       navigate("/signin");
     }
   };
 
-<<<<<<< HEAD
-  const handleCreateOpening = async () => {
-    const userId = getCurrentUserId();
-    if (userId) {
-=======
   const handleCreateOpening = () => {
     if (hasSession()) {
->>>>>>> 0ac01baa4c622dfc7d74ff1260d588d67ffd0325
       navigate("/create-temporary-opening");
     } else {
       toast({
