@@ -53,8 +53,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { error: res.error || "Sign in failed" };
       }
       const d = res.data;
-      setToken(d.token, d.user_id, d.email);
-      setUser({ id: d.user_id, email: d.email });
+      const token = d.accessToken ?? d.token ?? "";
+      const userId = d.userId ?? d.user_id ?? "";
+      setToken(token, userId, d.email);
+      setUser({ id: userId, email: d.email });
       return {};
     },
     []
@@ -67,8 +69,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return { error: res.error || "Sign up failed" };
       }
       const d = res.data;
-      setToken(d.token, d.user_id, d.email);
-      setUser({ id: d.user_id, email: d.email });
+      const token = d.accessToken ?? d.token ?? "";
+      const userId = d.userId ?? d.user_id ?? "";
+      setToken(token, userId, d.email);
+      setUser({ id: userId, email: d.email });
       return {};
     },
     []

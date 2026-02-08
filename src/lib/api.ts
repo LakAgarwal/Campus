@@ -90,29 +90,33 @@ export interface SignInRequest {
 export interface SignUpRequest {
   email: string;
   password: string;
-  full_name: string;
+  fullName: string;
   username: string;
-  roll_number: string;
-  year_of_study: number;
+  rollNumber: string;
+  yearOfStudy: number;
   branch: string;
-  blood_group: string;
+  bloodGroup: string;
 }
 
 export interface AuthResponse {
-  token: string;
-  user_id: string;
+  /** Backend returns accessToken; support both for compatibility */
+  token?: string;
+  accessToken?: string;
+  /** Backend returns userId; support both for compatibility */
+  user_id?: string;
+  userId?: string;
   email: string;
 }
 
 export async function signIn(body: SignInRequest): Promise<ApiResponse<AuthResponse>> {
-  return apiFetch<AuthResponse>("/auth/signin", {
+  return apiFetch<AuthResponse>("/auth/login", {
     method: "POST",
     body: JSON.stringify(body),
   });
 }
 
 export async function signUp(body: SignUpRequest): Promise<ApiResponse<AuthResponse>> {
-  return apiFetch<AuthResponse>("/auth/signup", {
+  return apiFetch<AuthResponse>("/auth/register", {
     method: "POST",
     body: JSON.stringify(body),
   });

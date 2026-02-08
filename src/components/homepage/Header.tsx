@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { User, Search, Plus, QrCode, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/components/ui/use-toast";
 import { getCurrentUserId } from "@/api/client";
 import {
@@ -56,13 +55,13 @@ const Header: React.FC<HeaderProps> = ({
   return (
     <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto px-4 flex justify-between items-center h-16">
+        {/* Left Section: Logo and Newsletter */}
         <div className="flex items-center space-x-4">
-          <h1 className="text-xl font-bold text-primary">Campus SETU</h1>
-          <NewsletterAlertsPanel />
           <h1 className="text-xl font-bold text-primary">Campus SETU</h1>
           <NewsletterAlertsPanel />
         </div>
 
+        {/* Center Section: Search Bar */}
         <div
           ref={searchRef}
           className="relative flex items-center max-w-xl transition-all duration-300 ease-in-out"
@@ -86,6 +85,7 @@ const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
+        {/* Right Section: Actions */}
         <div className="flex items-center space-x-2">
           <TooltipProvider>
             <Tooltip>
@@ -99,17 +99,16 @@ const Header: React.FC<HeaderProps> = ({
                     />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="animate-fadeIn">
-                    <DropdownMenuItem 
+                    <DropdownMenuItem
                       className="hover:bg-primary/10 cursor-pointer transition-colors"
                       onClick={handleCreateOpening}
                     >
                       Create Temporary Opening
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
-                    className="hover:bg-primary/10 cursor-pointer transition-colors">
+                    <DropdownMenuItem className="hover:bg-primary/10 cursor-pointer transition-colors">
                       Create Article
                     </DropdownMenuItem>
-                    <DropdownMenuItem 
+                    <DropdownMenuItem
                       className="hover:bg-primary/10 cursor-pointer transition-colors"
                       onClick={handleNavigateToClubCreate}
                     >
