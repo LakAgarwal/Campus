@@ -41,11 +41,11 @@ const ClubLoginForm = () => {
     setError(null);
     try {
       const base = getApiBaseUrl();
-      const res = await fetch(`${base}/clubs/login`, {
+      const res = await fetch(`${base}/club-auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          club_code: values.club_code.trim().toUpperCase(),
+          clubCode: values.club_code.trim().toUpperCase(),
           password: values.password,
         }),
       });
@@ -55,12 +55,13 @@ const ClubLoginForm = () => {
         setError("Invalid club code or password.");
         return;
       }
+      const clubInfo = data.clubs || {};
       sessionStorage.setItem("club_id", String(data.club_id));
-      sessionStorage.setItem("club_name", data.name || "");
-      sessionStorage.setItem("club_category", data.category || "");
+      sessionStorage.setItem("club_name", clubInfo.name || "");
+      sessionStorage.setItem("club_category", clubInfo.category || "");
       toast({
         title: "Login Successful",
-        description: `Welcome to ${data.name} dashboard!`,
+        description: `Welcome to ${clubInfo.name || "Club"} dashboard!`,
       });
       navigate("/club/dashboard");
     } catch {

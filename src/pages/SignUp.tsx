@@ -92,59 +92,57 @@ const SignUp = () => {
   };
 
   const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    
-    // Basic validation for step 2
-    if (!formData.username || !formData.rollNumber || !formData.branch || !formData.bloodGroup) {
+  e.preventDefault();
+  setLoading(true);
+  
+  if (!formData.username || !formData.rollNumber || !formData.branch || !formData.bloodGroup) {
+    toast({
+      variant: "destructive",
+      title: "Missing information",
+      description: "Please fill out all required fields.",
+    });
+    setLoading(false);
+    return;
+  }
+
+  try {
+    // Corrected to match the Java RegisterRequest DTO exactly
+    const { error } = await signUp({
+      email: formData.email,
+      password: formData.password,
+      fullName: formData.fullName,   // Sent as 'fullName'
+      username: formData.username,
+      rollNumber: formData.rollNumber, // Sent as 'rollNumber'
+      yearOfStudy: formData.yearOfStudy,
+      branch: formData.branch,
+      bloodGroup: formData.bloodGroup,  // Sent as 'bloodGroup'
+    });
+
+    if (error) {
       toast({
         variant: "destructive",
-        title: "Missing information",
-        description: "Please fill out all required fields.",
+        title: "Registration Failed",
+        description: typeof error === 'string' ? error : "Please check your details and try again.",
       });
-      setLoading(false);
       return;
     }
 
-    try {
-      const { error } = await signUp({
-        email: formData.email,
-        password: formData.password,
-        full_name: formData.fullName,
-        username: formData.username,
-        roll_number: formData.rollNumber,
-        year_of_study: formData.yearOfStudy,
-        branch: formData.branch,
-        blood_group: formData.bloodGroup,
-      });
+    toast({
+      title: "Success!",
+      description: "Account created successfully! Redirecting...",
+    });
 
-      if (error) {
-        toast({
-          variant: "destructive",
-          title: "Error creating account",
-          description: error,
-        });
-        return;
-      }
-
-      toast({
-        title: "Account created",
-        description: "Your account has been created successfully!",
-      });
-
-      setTimeout(() => {
-        navigate('/homepage');
-      }, 1000);
-    } catch {
-      toast({
-        variant: "destructive",
-        title: "Error creating account",
-        description: "An error occurred during sign up.",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+    setTimeout(() => navigate('/homepage'), 1500);
+  } catch (err) {
+    toast({
+      variant: "destructive",
+      title: "Connection Error",
+      description: "Could not reach the server. Ensure the backend is running on port 8083.",
+    });
+  } finally {
+    setLoading(false);
+  }
+};
 
   // Animation variants
   const formItemVariants = {

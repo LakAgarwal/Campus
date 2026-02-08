@@ -1,13 +1,12 @@
-import { Groq } from "groq-sdk";
+import Groq from "groq-sdk";
 
-// Use Vite environment variables
-const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
+const apiKey = import.meta.env.VITE_GROQ_API_KEY;
 
-if (!GROQ_API_KEY) {
-  throw new Error("Missing Groq API Key in environment variables");
+if (!apiKey) {
+  console.warn("Groq API Key missing: AI features will be disabled.");
 }
 
-// Create Groq client
-export const groq = new Groq({
-  apiKey: GROQ_API_KEY, dangerouslyAllowBrowser: true
-});
+// Only export ONE instance of groq
+export const groq = apiKey 
+  ? new Groq({ apiKey, dangerouslyAllowBrowser: true }) 
+  : null;
